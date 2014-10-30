@@ -1,0 +1,14 @@
+dxol
+dxol.data
+dxol.entity
+dxol.functional
+dxol.functional.gui
+dxol.functional.rest
+dxol.repository
+dxol.rest
+dxol.service
+dxol.service.account
+dxol.service.task
+dxol.web.account
+dxol.web.api
+dxol.web.task
