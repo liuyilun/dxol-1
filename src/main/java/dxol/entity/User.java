@@ -8,8 +8,7 @@ package dxol.entity;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,15 +19,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
 
-@Entity
-@Table(name = "ol_user")
-public class User extends IdEntity {
-	private String loginName;
+@MappedSuperclass
+public abstract class User extends IdEntityBase {
+	private String username;
 	private String name;
 	private String plainPassword;
 	private String password;
 	private String salt;
-	private String roles;
+	private String role;
 	private Date registerDate;
 
 	public User() {
@@ -39,12 +37,12 @@ public class User extends IdEntity {
 	}
 
 	@NotBlank
-	public String getLoginName() {
-		return loginName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@NotBlank
@@ -83,19 +81,19 @@ public class User extends IdEntity {
 		this.salt = salt;
 	}
 
-	public String getRoles() {
-		return roles;
+	public String getRole() {
+		return role;
 	}
 
-	public void setRoles(String roles) {
-		this.roles = roles;
+	public void setRole(String roles) {
+		this.role = roles;
 	}
 
 	@Transient
 	@JsonIgnore
 	public List<String> getRoleList() {
 		// 角色列表在数据库中实际以逗号分隔字符串存储，因此返回不能修改的List.
-		return ImmutableList.copyOf(StringUtils.split(roles, ","));
+		return ImmutableList.copyOf(StringUtils.split(role, ","));
 	}
 
 	// 设定JSON序列化时的日期格式
