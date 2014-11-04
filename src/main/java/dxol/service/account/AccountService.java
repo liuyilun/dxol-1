@@ -5,23 +5,20 @@
  *******************************************************************************/
 package dxol.service.account;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import dxol.entity.User;
-import dxol.repository.TaskDao;
-import dxol.repository.UserDao;
-import dxol.service.ServiceException;
-import dxol.service.account.ShiroDbRealm.ShiroUser;
 import org.springside.modules.security.utils.Digests;
 import org.springside.modules.utils.Clock;
 import org.springside.modules.utils.Encodes;
+
+import dxol.entity.User;
+import dxol.repository.AdminDao;
+import dxol.repository.StudentDao;
+import dxol.service.account.ShiroDbRealm.ShiroUser;
 
 /**
  * 用户管理类.
@@ -37,48 +34,51 @@ public class AccountService {
 	public static final int HASH_INTERATIONS = 1024;
 	private static final int SALT_SIZE = 8;
 
+	public final String STUDENT_METHOD = "student";
+	public final String ADMIN_METHOD = "admin";
+
 	private static Logger logger = LoggerFactory.getLogger(AccountService.class);
 
-	private UserDao userDao;
-	private TaskDao taskDao;
 	private Clock clock = Clock.DEFAULT;
+	private AdminDao adminDao;
+	private StudentDao studentDao;
 
-	public List<User> getAllUser() {
-		return (List<User>) userDao.findAll();
-	}
-
-	public User getUser(Long id) {
-		return userDao.findOne(id);
-	}
-
-	public User findUserByLoginName(String loginName) {
-		return userDao.findByLoginName(loginName);
-	}
-
-	public void registerUser(User user) {
-		entryptPassword(user);
-		user.setRoles("user");
-		user.setRegisterDate(clock.getCurrentDate());
-
-		userDao.save(user);
-	}
-
-	public void updateUser(User user) {
-		if (StringUtils.isNotBlank(user.getPlainPassword())) {
-			entryptPassword(user);
-		}
-		userDao.save(user);
-	}
-
-	public void deleteUser(Long id) {
-		if (isSupervisor(id)) {
-			logger.warn("操作员{}尝试删除超级管理员用户", getCurrentUserName());
-			throw new ServiceException("不能删除超级管理员用户");
-		}
-		userDao.delete(id);
-		taskDao.deleteByUserId(id);
-
-	}
+	// public List<User> getAllUser() {
+	// return (List<User>) userDao.findAll();
+	// }
+	//
+	// public User getUser(Long id) {
+	// return userDao.findOne(id);
+	// }
+	//
+	// public User findUserByLoginName(String loginName) {
+	// return userDao.findByLoginName(loginName);
+	// }
+	//
+	// public void registerUser(User user) {
+	// entryptPassword(user);
+	// user.setRole("user");
+	// user.setRegisterDate(clock.getCurrentDate());
+	//
+	// userDao.save(user);
+	// }
+	//
+	// public void updateUser(User user) {
+	// if (StringUtils.isNotBlank(user.getPlainPassword())) {
+	// entryptPassword(user);
+	// }
+	// userDao.save(user);
+	// }
+	//
+	// public void deleteUser(Long id) {
+	// if (isSupervisor(id)) {
+	// logger.warn("操作员{}尝试删除超级管理员用户", getCurrentUserName());
+	// throw new ServiceException("不能删除超级管理员用户");
+	// }
+	// userDao.delete(id);
+	// taskDao.deleteByUserId(id);
+	//
+	// }
 
 	/**
 	 * 判断是否超级管理员.
@@ -92,7 +92,7 @@ public class AccountService {
 	 */
 	private String getCurrentUserName() {
 		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-		return user.loginName;
+		return user.username;
 	}
 
 	/**
@@ -107,16 +107,26 @@ public class AccountService {
 	}
 
 	@Autowired
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
+	public void setAdminDao(AdminDao adminDao) {
+		this.adminDao = adminDao;
 	}
 
 	@Autowired
-	public void setTaskDao(TaskDao taskDao) {
-		this.taskDao = taskDao;
+	public void setStudentDao(StudentDao studentDao) {
+		this.studentDao = studentDao;
 	}
 
 	public void setClock(Clock clock) {
 		this.clock = clock;
+	}
+
+	public User findUserByLoginNameAndMethod(String username, String method) {
+		if (method.equals(ADMIN_METHOD)) {
+			return adminDao.findByUsername(username);
+		} else if (method.equals(STUDENT_METHOD)) {
+			return studentDao.findByUsername(username);
+		} else {
+			return null;
+		}
 	}
 }

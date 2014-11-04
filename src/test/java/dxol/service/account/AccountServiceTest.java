@@ -55,7 +55,7 @@ public class AccountServiceTest {
 		accountService.registerUser(user);
 
 		// 验证user的角色，注册日期和加密后的密码都被自动更新了。
-		assertThat(user.getRoles()).isEqualTo("user");
+		assertThat(user.getRole()).isEqualTo("user");
 		assertThat(user.getRegisterDate()).isEqualTo(currentTime);
 		assertThat(user.getPassword()).isNotNull();
 		assertThat(user.getSalt()).isNotNull();

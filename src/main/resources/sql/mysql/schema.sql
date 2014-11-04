@@ -1,27 +1,5 @@
-drop table if exists ol_task;
-drop table if exists ol_user;
 
-create table ol_task (
-	id bigint auto_increment,
-	title varchar(128) not null,
-	description varchar(255),
-	user_id bigint not null,
-    primary key (id)
-) engine=InnoDB;
-
-create table ol_user (
-	id bigint auto_increment,
-	login_name varchar(64) not null unique,
-	name varchar(64) not null,
-	password varchar(255) not null,
-	salt varchar(64) not null,
-	roles varchar(255) not null,
-	register_date timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-	primary key (id)
-) engine=InnoDB;
-
-
-drop table if exists student_course;
+drop table if exists ol_student_course;
 
 drop table if exists ol_course;
 
@@ -36,14 +14,14 @@ drop table if exists ol_summary;
 drop table if exists ol_exam_info;
 
 /*==============================================================*/
-/* Table: Relationship_1                                        */
+/* Table: ol_student_course                                        */
 /*==============================================================*/
-create table student_course
+create table ol_student_course
 (
    student_id           bigint not null comment '学生id',
    course_id            bigint not null comment '课程id',
    time                 int comment '已学习时间（分钟）',
-   course               int comment '已学习课时',
+   hour               int comment '已学习课时',
    primary key (student_id, course_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -91,17 +69,21 @@ create table ol_student
    id                   bigint not null auto_increment comment '学生id',
    username             varchar(64) not null comment '登录用户名（学号）',
    password             varchar(255) not null comment '密码',
+   salt 				varchar(64) not null,
+   role					varchar(64) not null default 'student',
+   register_date		timestamp not null default CURRENT_TIMESTAMP,
    name                 varchar(64) not null comment '学生姓名',
-   school_id            bigint comment '院id',
    depart               varchar(255) ,
    sex                  int default 1 ,
    grade                int default 0 ,
    is_finish            int default 1 ,
    alt_hour             int default 0,
    req_hour             int default 0 ,
+   exam_time tinyint(4) NOT NULL DEFAULT 2 COMMENT '剩余考试次数',
+   school_id            bigint comment '院id',
    summary_id           bigint comment '学习总结id',
-   summary_up_time      datetime comment '学习总结上传（更新）时间',
    identity_id          bigint not null comment '身份id（积极分子、发展对象、预备党员、党员、党支书）',
+   summary_up_time      timestamp default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment '学习总结上传（更新）时间',
    primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -136,11 +118,22 @@ create table ol_exam_info
 
 DROP TABLE IF EXISTS ol_admin;
 CREATE TABLE ol_admin (
-  id bigint NOT NULL AUTO_INCREMENT,
-  username varchar(64) not NULL,
-  password varchar(255) not NULL,
-  school_id bigint ,
-  is_super int default 2,
-  PRIMARY KEY (`id`)
+  id 					bigint NOT NULL AUTO_INCREMENT,
+  username 				varchar(64) not NULL,
+  password 				varchar(255) not NULL,
+  salt 					varchar(64) not null,
+  role 					varchar(64) not null default 'admin',
+  name					varchar(64) not NULL,
+  register_date		timestamp not null default CURRENT_TIMESTAMP,
+  school_id 			bigint ,
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+drop table if exists ol_inform;
+create table ol_inform(
+  id 					bigint NOT NULL AUTO_INCREMENT,
+  title 				varchar(255) not null,
+  content               text,
+  update_time			timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  primary key (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

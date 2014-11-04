@@ -13,17 +13,18 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import dxol.entity.User;
 import org.springside.modules.utils.Encodes;
 
 import com.google.common.base.Objects;
+
+import dxol.entity.User;
+import dxol.filter.UsernamePasswordMethodToken;
 
 public class ShiroDbRealm extends AuthorizingRealm {
 
@@ -34,12 +35,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
-		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-		User user = accountService.findUserByLoginName(token.getUsername());
+		UsernamePasswordMethodToken token = (UsernamePasswordMethodToken) authcToken;
+		User user = accountService.findUserByLoginNameAndMethod(token.getUsername(), token.getMethod());
 		if (user != null) {
 			byte[] salt = Encodes.decodeHex(user.getSalt());
-			return new SimpleAuthenticationInfo(new ShiroUser(user.getId(), user.getLoginName(), user.getName()),
-					user.getPassword(), ByteSource.Util.bytes(salt), getName());
+			return new SimpleAuthenticationInfo(new ShiroUser(user.getId(), user.getUsername(), user.getName(), user
+					.getRoleList().get(0)), user.getPassword(), ByteSource.Util.bytes(salt), getName());
 		} else {
 			return null;
 		}
@@ -51,7 +52,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
-		User user = accountService.findUserByLoginName(shiroUser.loginName);
+		User user = accountService.findUserByLoginNameAndMethod(shiroUser.username, shiroUser.role);
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		info.addRoles(user.getRoleList());
 		return info;
@@ -78,13 +79,15 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	public static class ShiroUser implements Serializable {
 		private static final long serialVersionUID = -1373760761780840081L;
 		public Long id;
-		public String loginName;
+		public String username;
 		public String name;
+		public String role;
 
-		public ShiroUser(Long id, String loginName, String name) {
+		public ShiroUser(Long id, String username, String name, String role) {
 			this.id = id;
-			this.loginName = loginName;
+			this.username = username;
 			this.name = name;
+			this.role = role;
 		}
 
 		public String getName() {
@@ -96,19 +99,19 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		 */
 		@Override
 		public String toString() {
-			return loginName;
+			return username;
 		}
 
 		/**
-		 * 重载hashCode,只计算loginName;
+		 * 重载hashCode,只计算username;
 		 */
 		@Override
 		public int hashCode() {
-			return Objects.hashCode(loginName);
+			return Objects.hashCode(username);
 		}
 
 		/**
-		 * 重载equals,只计算loginName;
+		 * 重载equals,只计算username;
 		 */
 		@Override
 		public boolean equals(Object obj) {
@@ -122,11 +125,11 @@ public class ShiroDbRealm extends AuthorizingRealm {
 				return false;
 			}
 			ShiroUser other = (ShiroUser) obj;
-			if (loginName == null) {
-				if (other.loginName != null) {
+			if (username == null) {
+				if (other.username != null) {
 					return false;
 				}
-			} else if (!loginName.equals(other.loginName)) {
+			} else if (!username.equals(other.username)) {
 				return false;
 			}
 			return true;

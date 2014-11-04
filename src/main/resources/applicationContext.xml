@@ -29,6 +29,7 @@
 			<props>
 				<!-- 命名规则 My_NAME->MyName -->
 				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
 	</bean>
@@ -133,8 +134,8 @@
 
 		<!-- 初始化数据表结构 与默认数据-->
 		<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
-			<jdbc:script location="classpath:sql/h2/schema.sql" />
-			<jdbc:script location="classpath:data/h2/import-data.sql" encoding="UTF-8"/>
+			<jdbc:script location="classpath:sql/mysql/schema.sql" />
+			<jdbc:script location="classpath:data/mysql/import.sql" encoding="UTF-8"/>
 		</jdbc:initialize-database>
 	</beans>
 </beans>
