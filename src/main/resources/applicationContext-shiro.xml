@@ -26,11 +26,11 @@
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login" />
-		<property name="successUrl" value="/" />
 		<!-- 
+		<property name="successUrl" value="/" />
 		先跳转到指定controller，再由controller判断登陆角色进行跳转
-		<property name="successUrl" value="/success" />
 		 -->
+		<property name="successUrl" value="/success" />
 		<property name="filters">
 			<map>
 				<entry key = "authc" value-ref="myFormAuthenticationFilter"></entry>

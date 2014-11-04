@@ -14,6 +14,7 @@ public class MyFormAuthenticationFilter extends FormAuthenticationFilter {
 		String username = getUsername(request);
 		String password = getPassword(request);
 		String method = getMethod(request);
+		System.out.println("FormAuthenticationFilter =============" + method);
 		boolean rememberMe = isRememberMe(request);
 		String host = getHost(request);
 		return new UsernamePasswordMethodToken(username, password.toCharArray(), rememberMe, host, method);

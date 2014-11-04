@@ -31,14 +31,14 @@
                 </div>
             </div>
             <div id="loginbox">            
-                <form id="loginform" action="${ctx}/login">
+                <form id="loginform" action="${ctx}/login" method="post">
                 	<input type="text" hidden="true" name="method" id="method" value="student"/>
     				<p>请输入学生用户名和密码：</p>
                     <div class="input-group input-sm">
-                        <span class="input-group-addon"><i class="fa fa-user"></i></span><input class="form-control" type="text" id="username" placeholder="Username" />
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span><input class="form-control" type="text" id="username" name="username" placeholder="Username" />
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lock"></i></span><input class="form-control" type="password" id="password" placeholder="Password" />
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span><input class="form-control" type="password" id="password" name="password" placeholder="Password" />
                     </div>
                     <div class="form-actions clearfix">
                         <div class="pull-left">
@@ -48,14 +48,14 @@
                     </div>
                 </form>
 
-                <form id="registerform" action="${ctx}/login">
+                <form id="registerform" action="${ctx}/login" method="post">
                 	<input type="text" hidden="true" name="method" id="method" value="student"/>
                     <p>请输入管理员用户名和密码：</p>
 	                    <div class="input-group input-sm">
-	                        <span class="input-group-addon"><i class="fa fa-user"></i></span><input class="form-control" type="text" id="username" placeholder="Username" />
+	                        <span class="input-group-addon"><i class="fa fa-user"></i></span><input class="form-control" type="text" id="username" name="username" placeholder="Username" />
 	                    </div>
 	                    <div class="input-group">
-	                        <span class="input-group-addon"><i class="fa fa-lock"></i></span><input class="form-control" type="password" id="password" placeholder="Password" />
+	                        <span class="input-group-addon"><i class="fa fa-lock"></i></span><input class="form-control" type="password" id="password" name="password" placeholder="Password" />
 	                    </div>
  						<div class="form-actions clearfix">
 		                    <div class="pull-left">
