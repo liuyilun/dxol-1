@@ -15,6 +15,11 @@ public class SuccessController {
 	public String success() {
 
 		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-		return "admin/view/acount/index";
+		if (SecurityUtils.getSubject().hasRole("student")) {
+			return "redirect:/student/success";
+		} else if (SecurityUtils.getSubject().hasRole("admin")) {
+			return "redirect:/admin/success";
+		}
+		return null;
 	}
 }

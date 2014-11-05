@@ -5,15 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = "/admin")
-public class TController {
+@RequestMapping(value = "/admin/success")
+public class AdminSuccessController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String index() {
-		return "admin/view/acount/index";
+	public String success() {
+		return "/admin/view/acount/index";
 	}
 
-	@RequestMapping(value = "login")
-	public String login() {
-		return "admin/view/acount/login";
-	}
 }

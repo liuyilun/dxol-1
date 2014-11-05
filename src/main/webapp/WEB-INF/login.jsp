@@ -49,7 +49,7 @@
                 </form>
 
                 <form id="registerform" action="${ctx}/login" method="post">
-                	<input type="text" hidden="true" name="method" id="method" value="student"/>
+                	<input type="text" hidden="true" name="method" id="method" value="admin"/>
                     <p>请输入管理员用户名和密码：</p>
 	                    <div class="input-group input-sm">
 	                        <span class="input-group-addon"><i class="fa fa-user"></i></span><input class="form-control" type="text" id="username" name="username" placeholder="Username" />
