@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "ol_inform")
-public class Infrom extends IdEntityBase {
+public class Inform extends IdEntityBase {
 	private String title;
 	private String content;
 	private Date updateTime;

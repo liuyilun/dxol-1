@@ -6,7 +6,7 @@
     padding: 0;
     width: 20px;
     height: 20px;
-    background: url("http://demo.bootstrap-hunter.com/unicorn/css/icheck/flat/blue.png") no-repeat;
+    background: url("./blue.png") no-repeat;
     border: none;
     cursor: pointer;
 }

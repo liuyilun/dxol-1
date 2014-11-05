@@ -38,7 +38,7 @@
 <script src="${ctx}/static/unicorn/js/select2.min.js"></script>
 <script src="${ctx}/static/unicorn/js/jquery.validate.js"></script>
 <script src="${ctx}/static/unicorn/js/unicorn.form_validation.js"></script>
-<script async src="//www.google-analytics.com/analytics.js"></script>
+
 
 
 <sitemesh:head/>

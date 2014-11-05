@@ -25,7 +25,7 @@
 				<shiro:hasRole name="super">
 				<li><a href="tables.html"><i class="fa fa-th"></i> <span>课程管理</span></a></li>
 				<li><a href="grid.html"><i class="fa fa-th-list"></i> <span>管理员管理</span></a></li>
-				<li><a href="grid.html"><i class="fa fa-th-list"></i> <span>通知管理</span></a></li>
+				<li><a href="${ctx}/informAdmin"><i class="fa fa-th-list"></i> <span>通知管理</span></a></li>
 				</shiro:hasRole>	
 				
 			</ul>
