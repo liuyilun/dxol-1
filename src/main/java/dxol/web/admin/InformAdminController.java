@@ -18,7 +18,7 @@ import com.google.common.collect.Maps;
 import dxol.service.inform.InformService;
 
 @Controller
-@RequestMapping(value = "/informAdmin")
+@RequestMapping(value = "/admin/informAdmin")
 public class InformAdminController {
 
 	private static final String PAGE_SIZE = "2";

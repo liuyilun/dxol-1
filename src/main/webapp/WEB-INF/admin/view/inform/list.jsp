@@ -22,7 +22,7 @@
 		 var message ="确认删除 <strong> "+name+"</strong> 吗？";
 		 bootbox.confirm(message,function(result){
 			 if(result){
-				 location.href="${ctx}/informAdmin/delete/" + id;
+				 location.href="${ctx}/admin/informAdmin/delete/" + id;
 			 }
 		 });
 		 

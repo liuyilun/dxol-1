@@ -16,7 +16,7 @@ public class SuccessController {
 
 		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
 		if (SecurityUtils.getSubject().hasRole("student")) {
-			return "redirect:/student/success";
+			return "redirect:/ol/success";
 		} else if (SecurityUtils.getSubject().hasRole("admin")) {
 			return "redirect:/admin/success";
 		}
