@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<div id="header">
+
 	<div id="header">
 		<h1><a href="#">.</a></h1>	
 		<a id="menu-trigger" href="#"><i class="fa fa-bars"></i></a>	
@@ -17,19 +17,18 @@
     
     <div id="sidebar">
     <div id="search">
-					<input type="text" placeholder="Search here..."><button type="submit" class="tip-right" title="" data-original-title="Search"><i class="fa fa-search"></i></button>
+			
 	</div>
-      <shiro:user>
 			<ul>
 				<li class="active"><a href="index.html"><i class="fa fa-home"></i> <span>学生管理</span></a></li>
-				<shiro:hasRole name="super">
-				<li><a href="tables.html"><i class="fa fa-th"></i> <span>课程管理</span></a></li>
-				<li><a href="grid.html"><i class="fa fa-th-list"></i> <span>管理员管理</span></a></li>
-				<li><a href="${ctx}/informAdmin"><i class="fa fa-th-list"></i> <span>通知管理</span></a></li>
+    			<shiro:user>
+					<shiro:hasRole name="super">
+					<li><a href="tables.html"><i class="fa fa-th"></i> <span>课程管理</span></a></li>
+					<li><a href="grid.html"><i class="fa fa-th-list"></i> <span>管理员管理</span></a></li>
+					<li><a href="${ctx}/informAdmin"><i class="fa fa-th-list"></i> <span>通知管理</span></a></li>
 				</shiro:hasRole>	
-				
+				</shiro:user>
 			</ul>
-		</shiro:user>
 			
 	</div>
 
@@ -58,4 +57,3 @@
 		</h1>
 	</div>
 	 -->
-</div>

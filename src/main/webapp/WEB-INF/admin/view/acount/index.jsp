@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<html >
+
 	<head>
 		<title></title>
 	</head>	
@@ -228,4 +228,4 @@
 
 			</div>
 	</body>
-</html>
+

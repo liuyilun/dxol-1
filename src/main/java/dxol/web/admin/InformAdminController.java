@@ -5,17 +5,16 @@ import java.util.Map;
 import javax.servlet.ServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springside.modules.web.Servlets;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Maps;
 
-import dxol.entity.Inform;
 import dxol.service.inform.InformService;
 
 @Controller
@@ -39,16 +38,23 @@ public class InformAdminController {
 			@RequestParam(value = "sortType", defaultValue = "auto") String sortType, Model model,
 			ServletRequest request) {
 
-		Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
+		// Map<String, Object> searchParams = Servlets.getParametersStartingWith(request, "search_");
 
-		Page<Inform> infroms = informService.getInformList(searchParams, pageNumber, pageSize, sortType);
+		// Page<Inform> infroms = informService.getInformList(searchParams, pageNumber, pageSize, sortType);
 
-		model.addAttribute("informs", infroms);
+		model.addAttribute("informs", informService.getInformList());
 		model.addAttribute("sortType", sortType);
 		model.addAttribute("sortTypes", sortTypes);
-		model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
+		// model.addAttribute("searchParams", Servlets.encodeParameterStringWithPrefix(searchParams, "search_"));
 
 		return "admin/view/inform/list";
 	}
 
+	@RequestMapping(value = "delete/{id}")
+	public String delete(@PathVariable("id") Long id, RedirectAttributes attributes) {
+		informService.deleteInform(id);
+		attributes.addAttribute("message", "删除成功");
+		return "redirect:/informAdmin";
+
+	}
 }

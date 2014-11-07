@@ -3,7 +3,6 @@ package dxol.service.inform;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -23,10 +22,11 @@ public class InformService {
 	@Autowired
 	private InformDao informDao;
 
-	public Page<Inform> getInformList(Map<String, Object> searchParams, int pageNumber, int pageSize, String sortType) {
-		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
-		Specification<Inform> spec = buildSpecification(searchParams);
-		return informDao.findAll(spec, pageRequest);
+	public Iterable<Inform> getInformList() {
+		// PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
+		// Specification<Inform> spec = buildSpecification(searchParams);
+		// return informDao.findAll(spec, pageRequest);
+		return informDao.findAll();
 	}
 
 	private Specification<Inform> buildSpecification(Map<String, Object> searchParams) {
@@ -44,6 +44,10 @@ public class InformService {
 		}
 
 		return new PageRequest(pageNumber - 1, pageSize, sort);
+	}
+
+	public void deleteInform(Long id) {
+		informDao.delete(id);
 	}
 
 }
