@@ -15,11 +15,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Maps;
 
-import dxol.entity.Inform;
 import dxol.service.inform.InformService;
 
 @Controller
-@RequestMapping(value = "/informAdmin")
+@RequestMapping(value = "/admin/informAdmin")
 public class InformAdminController {
 
 	private static final String PAGE_SIZE = "2";
@@ -50,18 +49,11 @@ public class InformAdminController {
 
 		return "admin/view/inform/list";
 	}
-	
-	@RequestMapping(value = "create",method = RequestMethod.GET)
-	public String createForm(Model model){
-		model.addAttribute("inform",new Inform());
-		model.addAttribute("action", "create");
-		return "admin/view/inform/informForm";
-	}
 
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Long id, RedirectAttributes attributes) {
 		informService.deleteInform(id);
-		attributes.addFlashAttribute("message", "删除成功");
+		attributes.addAttribute("message", "删除成功");
 		return "redirect:/informAdmin";
 
 	}

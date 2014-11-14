@@ -2,14 +2,15 @@
 <!-- 
 <decorators defaultdir="/WEB-INF/layouts/">
  -->
-<decorators defaultdir="/WEB-INF/admin/layouts/">
+<decorators >
 	<excludes>
-		<pattern>/static/*</pattern>
-		<pattern>/api/*</pattern>
 		<pattern>/login</pattern>
 	</excludes>
 	
-	<decorator name="default" page="default.jsp">
-		<pattern>/*</pattern>
+	<decorator name="admin/layouts/default" page="/WEB-INF/admin/layouts/default.jsp">
+		<pattern>/admin/*</pattern>
+	</decorator>
+	<decorator name="ol/layouts/default" page="/WEB-INF/ol/layouts/default.jsp" >
+		<pattern>/ol/*</pattern>
 	</decorator>
 </decorators>

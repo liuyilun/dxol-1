@@ -13,8 +13,7 @@
 <meta http-equiv="Cache-Control" content="no-store" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-<!-- 
- -->
+
 <link type="image/x-icon" href="${ctx}/static/images/favicon.ico" rel="shortcut icon">
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/font-awesome.css" />
@@ -23,6 +22,7 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/select2.css" />		
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/fullcalendar.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/jquery.jscrollpane.css" />	
+
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/unicorn.css" />
 
 <script src="${ctx}/static/unicorn/js/excanvas.min.js"></script>
