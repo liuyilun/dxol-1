@@ -1,5 +1,6 @@
 package dxol.entity;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,23 +10,29 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "ol_student")
 public class Student extends User {
 	private String depart;
-	private int sex;
-	private int grade;
-	private int isFinish;
-	private int altHour;
-	private int reqHour;
-	private int examTime;
+	private Integer sex;
+	private Integer grade;
+	private Integer isFinish;
+	private Integer altHour;
+	private Integer reqHour;
+	private Integer examTime;
+	private Date summaryUpTime;
 	private School school;
 	private Summary summary;
 	private Identity identity;
 
-	@OneToMany(mappedBy = "student")
+	@OneToMany(mappedBy = "students")
 	private List<Course> courses;
 
+
+
+	
 	public String getDepart() {
 		return depart;
 	}
@@ -34,54 +41,62 @@ public class Student extends User {
 		this.depart = depart;
 	}
 
-	public int getSex() {
+	public Integer getSex() {
 		return sex;
 	}
 
-	public void setSex(int sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
-	public int getGrade() {
+	public Integer getGrade() {
 		return grade;
 	}
 
-	public void setGrade(int grade) {
+	public void setGrade(Integer grade) {
 		this.grade = grade;
 	}
 
-	public int getIsFinish() {
+	public Integer getIsFinish() {
 		return isFinish;
 	}
 
-	public void setIsFinish(int isFinish) {
+	public void setIsFinish(Integer isFinish) {
 		this.isFinish = isFinish;
 	}
 
-	public int getAltHour() {
+	public Integer getAltHour() {
 		return altHour;
 	}
 
-	public void setAltHour(int altHour) {
+	public void setAltHour(Integer altHour) {
 		this.altHour = altHour;
 	}
 
-	public int getReqHour() {
+	public Integer getReqHour() {
 		return reqHour;
 	}
 
-	public void setReqHour(int reqHour) {
+	public void setReqHour(Integer reqHour) {
 		this.reqHour = reqHour;
 	}
 
-	public int getExamTime() {
+	public Integer getExamTime() {
 		return examTime;
 	}
 
-	public void setExamTime(int examTime) {
+	public void setExamTime(Integer examTime) {
 		this.examTime = examTime;
 	}
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+	public Date getSummaryUpTime() {
+		return summaryUpTime;
+	}
+
+	public void setSummaryUpTime(Date summaryUpTime) {
+		this.summaryUpTime = summaryUpTime;
+	}
 	@ManyToOne
 	@JoinColumn(name = "school_id")
 	public School getSchool() {

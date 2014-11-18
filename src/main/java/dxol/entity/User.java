@@ -36,7 +36,7 @@ public abstract class User extends IdEntityBase {
 		this.id = id;
 	}
 
-	@NotBlank
+	//@NotBlank
 	public String getUsername() {
 		return username;
 	}
@@ -45,7 +45,7 @@ public abstract class User extends IdEntityBase {
 		this.username = username;
 	}
 
-	@NotBlank
+	//@NotBlank
 	public String getName() {
 		return name;
 	}

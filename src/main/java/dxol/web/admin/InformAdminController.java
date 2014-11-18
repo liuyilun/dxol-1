@@ -53,8 +53,8 @@ public class InformAdminController {
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Long id, RedirectAttributes attributes) {
 		informService.deleteInform(id);
-		attributes.addAttribute("message", "删除成功");
-		return "redirect:/informAdmin";
+		attributes.addFlashAttribute("message", "删除成功");
+		return "redirect:/admin/informAdmin";
 
 	}
 }

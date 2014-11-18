@@ -46,7 +46,7 @@
 
 <sitemesh:head/>
 </head>
-<html>
+
 <body data-color="grey" class="flat">
 	<div id="wrapper">
 

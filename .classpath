@@ -39,5 +39,9 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/main/webapp/lib/ant.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/lib/commons-fileupload-1.2.2-sources.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/lib/commons-io-2.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/lib/commons-fileupload-1.1.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

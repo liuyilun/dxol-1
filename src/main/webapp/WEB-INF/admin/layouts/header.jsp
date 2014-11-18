@@ -20,12 +20,12 @@
 			
 	</div>
 			<ul>
-				<li class="active"><a href="index.html"><i class="fa fa-home"></i> <span>学生管理</span></a></li>
+				<li id="student_tab"><a href="${ctx}/student"><i class="fa fa-home"></i> <span>学生管理</span></a></li>
     			<shiro:user>
 					<shiro:hasRole name="super">
-					<li><a href="tables.html"><i class="fa fa-th"></i> <span>课程管理</span></a></li>
-					<li><a href="grid.html"><i class="fa fa-th-list"></i> <span>管理员管理</span></a></li>
-					<li><a href="${ctx}/admin/informAdmin"><i class="fa fa-th-list"></i> <span>通知管理</span></a></li>
+					<li id="course_tab"><a href="${ctx}/background/fileOperate"><i class="fa fa-th"></i> <span>课程管理</span></a></li>
+					<li id="admin_tab"><a href="${ctx}/manager"><i class="fa fa-th-list"></i> <span>管理员管理</span></a></li>
+					<li id="inform_tab"><a href="${ctx}/admin/informAdmin"><i class="fa fa-th-list"></i> <span>通知管理</span></a></li>
 				</shiro:hasRole>	
 				</shiro:user>
 			</ul>

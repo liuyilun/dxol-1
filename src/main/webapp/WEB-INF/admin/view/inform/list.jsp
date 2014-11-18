@@ -6,7 +6,8 @@
 <head>
 <script type="text/javascript">
 	$(document).ready(function(){
-		var message = getUrlParam("message");
+		$("#inform_tab").addClass("active");
+		var message="${message}" /* getUrlParam("message") */;
 		if(message!= null){
 			bootbox.alert(message);
 		}
@@ -54,7 +55,7 @@
 				<h1>通知管理</h1>
 			</div>
 			<div id="breadcrumb">
-				<a href="#" title="Go to Home" class="tip-bottom"><i
+				<a href="${ctx}/admin/success" title="Go to Home" class="tip-bottom"><i
 					class="fa fa-home"></i> Home</a> <a href="#" class="current">Tables</a>
 			</div>
 			<div class="row">
@@ -86,7 +87,7 @@
 												class="tip-top" data-original-title="修改"><i
 													class="fa fa-pencil"></i></a> <a class="tip-top"
 												data-original-title="删除" id="bootbox-alert"
-												onclick="deleteConfirm(${inform.id},${inform.title });"><i
+												onclick="deleteConfirm(${inform.id},'${inform.title }');"><i
 													class="fa fa-times"></i></a></td>
 										</tr>
 									</c:forEach>

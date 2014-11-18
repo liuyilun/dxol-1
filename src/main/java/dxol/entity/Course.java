@@ -17,7 +17,7 @@ public class Course extends IdEntityBase {
 	private int reqAlt;
 	private String content;
 
-	@OneToMany(mappedBy = "course")
+	@OneToMany(mappedBy = "courses")
 	private List<Student> students;
 
 	@ManyToOne
