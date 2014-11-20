@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+s<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>  
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -20,12 +20,13 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/icheck/flat/blue.css" />
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/select2.css" />		
-<link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/fullcalendar.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/icheck/flat/blue.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/select2.css" />		
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/jquery.jscrollpane.css" />	
 
 <link rel="stylesheet" type="text/css" href="${ctx}/static/unicorn/css/unicorn.css" />
 
-<script src="${ctx}/static/unicorn/js/excanvas.min.js"></script>
 <script src="${ctx}/static/unicorn/js/jquery.min.js"></script>
 <script src="${ctx}/static/unicorn/js/jquery-ui.custom.js"></script>
 <script src="${ctx}/static/unicorn/js/bootstrap.min.js"></script>
@@ -39,6 +40,9 @@
 <script src="${ctx}/static/unicorn/js/jquery.nicescroll.min.js"></script>
 <script src="${ctx}/static/unicorn/js/fullcalendar.min.js"></script>
 
+<script src="${ctx}/static/unicorn/js/jquery.validate.js"></script>
+<script src="${ctx}/static/unicorn/js/jquery.dataTables.min.js"></script>
+
 <script src="${ctx}/static/unicorn/js/unicorn.js"></script>
 <script src="${ctx}/static/unicorn/js/unicorn.form_validation.js"></script>
 <script src="${ctx}/static/unicorn/js/unicorn.tables.js"></script>
@@ -46,7 +50,7 @@
 
 <sitemesh:head/>
 </head>
-
+<html>
 <body data-color="grey" class="flat">
 	<div id="wrapper">
 

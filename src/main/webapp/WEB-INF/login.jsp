@@ -21,15 +21,7 @@
             <div id="logo">
                 <img src="${ctx}/static/unicorn/img/logo.png" alt="" />
             </div>
-            <div id="user">
-                <div class="avatar">
-                    <div class="inner"></div>
-                    <img src="${ctx}/static/images/nku_logo.jpg" />
-                </div>
-                <div class="text">
-                    <h4>Hello,<span class="user_name"></span></h4>
-                </div>
-            </div>
+         
             <div id="loginbox">            
                 <form id="loginform" action="${ctx}/login" method="post">
                 	<input type="text" hidden="true" name="method" id="method" value="student"/>
@@ -42,13 +34,16 @@
                     </div>
                     <div class="form-actions clearfix">
                         <div class="pull-left">
-                            <a href="#adminform" class="flip-link to-register blue">管理员登陆</a>
+                            <a href="#adminform" class="flip-link to-admin grey">管理员登陆</a>
+                        </div>
+                        <div class="pull-right">
+                            <a href="${ctx }/inform" class="blue">通知/帮助</a>
                         </div>
                         <input type="submit" class="btn btn-block btn-primary btn-default" value="登陆" />
                     </div>
                 </form>
 
-                <form id="registerform" action="${ctx}/login" method="post">
+                <form id="adminform" action="${ctx}/login" method="post">
                 	<input type="text" hidden="true" name="method" id="method" value="admin"/>
                     <p>请输入管理员用户名和密码：</p>
 	                    <div class="input-group input-sm">
@@ -59,12 +54,12 @@
 	                    </div>
  						<div class="form-actions clearfix">
 		                    <div class="pull-left">
-		                     <a href="#loginform" class="flip-link to-login blue">学生登陆</a>
+		                     <a href="#loginform" class="flip-link to-login grey">学生登陆</a>
 		                     </div>
                         	<input type="submit" class="btn btn-block btn-success" value="登陆" />
                         </div>
                 </form>
-               </div>
+            </div>
             </div>
         </div>
         

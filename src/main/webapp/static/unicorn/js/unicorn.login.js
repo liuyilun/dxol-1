@@ -5,11 +5,11 @@
 **/
 
 var login = $('#loginform');
-var recover = $('#recoverform');
-var register = $('#registerform');
-var login_recover = $('#loginform, #recoverform');
-var login_register = $('#loginform, #registerform');
-var recover_register = $('#recoverform, #registerform');
+var inform = $('#inform');
+var admin = $('#adminform');
+var login_inform = $('#loginform, #inform');
+var login_admin = $('#loginform, #adminform');
+var inform_admin = $('#inform, #adminform');
 var loginbox = $('#loginbox');
 var userbox = $('#user');
 var animation_speed = 150;
@@ -18,27 +18,31 @@ $(document).ready(function(){
 
     var loc = window.location + '';
     var ee = loc.split('#');
-
-    if(ee[1] == 'recoverform' && ee[1] != undefined){
+    if(ee[1] == undefined){
+    	loginbox.css({'height':'210px'});
+        $('#inform, #adminform').css({'z-index':'100','opacity':'0.01'});
+        $('#loginform').css({'z-index':'200','opacity':'1','display':'block'});
+    }
+    if(ee[1] == 'inform' && ee[1] != undefined){
         loginbox.css({'height':'183px'});
-        $('#loginform, #registerform').css({'z-index':'100','opacity':'0.01'});
-        $('#recoverform').css({'z-index':'200','opacity':'1','display':'block'});
-    } else if(ee[1] = 'registerform' && ee[1] != undefined) {
+        $('#loginform, #adminform').css({'z-index':'100','opacity':'0.01'});
+        $('#inform').css({'z-index':'200','opacity':'1','display':'block'});
+    } else if(ee[1] == 'adminform' && ee[1] != undefined) {
         loginbox.css({'height':'210px'});
-        login_recover.css({'z-index':'100','opacity':'0.01'});
-        register.css({'z-index':'200','opacity':'1','display':'block'});
+        login_inform.css({'z-index':'100','opacity':'0.01'});
+        admin.css({'z-index':'200','opacity':'1','display':'block'});
     }
 
-	$('.flip-link.to-recover').click(function(){
-        switch_container(recover,login_register,183);
+	$('.flip-link.to-inform').click(function(){
+        switch_container(inform,login_admin,183);
 	});
 	$('.flip-link.to-login').click(function(){
-        switch_container(login,recover_register,210);
+        switch_container(login,inform_admin,210);
 	});
-    $('.flip-link.to-register').click(function(){
-        switch_container(register,login_recover,210);
+    $('.flip-link.to-admin').click(function(){
+        switch_container(admin,login_inform,210);
     });
-
+    /*
     $('#loginform').submit(function(e){
         var thisForm = $(this); 
         var userinput = $('#username');
@@ -61,7 +65,7 @@ $(document).ready(function(){
             return true;
         }       
     });
-
+*/
     $('#username, #password').on('keyup',function(){
         highlight_error($(this));
     }).focus(function(){

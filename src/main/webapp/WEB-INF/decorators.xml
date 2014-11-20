@@ -13,7 +13,8 @@
 	<decorator name="ol/layouts/default" page="/WEB-INF/ol/layouts/default.jsp" >
 		<pattern>/ol/*</pattern>
 	</decorator>
-	<decorator name="admin/layouts/default" page="/WEB-INF/admin/layouts/default.jsp">
-		<pattern>/*</pattern>
+	<decorator name="inform/layouts/default" page="/WEB-INF/inform/layouts/default.jsp" >
+		<pattern>/inform/*</pattern>
+		<pattern>/inform</pattern>
 	</decorator>
 </decorators>

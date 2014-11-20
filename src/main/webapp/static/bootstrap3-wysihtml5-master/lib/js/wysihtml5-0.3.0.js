@@ -7694,7 +7694,23 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);/**
+})(wysihtml5);(function(wysihtml5) {
+  var undef;
+  wysihtml5.commands.paragraph = {
+    exec: function(composer, command) {
+      return wysihtml5.commands.formatInline.exec(composer, command, "p");
+    },
+
+    state: function(composer, command) {
+      return wysihtml5.commands.formatInline.state(composer, command, "p");
+    },
+
+    value: function() {
+      return undef;
+    }
+  };
+})(wysihtml5);
+/**
  * Undo Manager for wysihtml5
  * slightly inspired by http://rniwa.com/editing/undomanager.html#the-undomanager-interface
  */
@@ -8516,6 +8532,8 @@ wysihtml5.views.View = Base.extend(
       var dataTransfer = event.dataTransfer,
           data;
 
+
+      console.log('PASTED', event);
       if (dataTransfer && browser.supportsDataTransfer()) {
         data = dataTransfer.getData("text/html") || dataTransfer.getData("text/plain");
       }
