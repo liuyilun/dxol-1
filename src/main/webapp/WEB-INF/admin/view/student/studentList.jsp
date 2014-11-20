@@ -30,7 +30,7 @@ $(document).ready(function(){
 		var message = "确认删除 <strong> " + name + "</strong> 吗？";
 		bootbox.confirm(message, function(result) {
 			if (result) {
-				location.href = "${ctx}/student/delete/" + id;
+				location.href = "${ctx}/admin/student/delete/" + id;
 			}
 		});
 		/*  	$("#alertMessage").html("确认删除 <strong> "+name+"</strong> 吗？");
@@ -134,7 +134,7 @@ $(document).ready(function(){
 			</div>
 			<div id="breadcrumb">
 				<a href="${ctx}/admin/success" title="Go to Home" class="tip-bottom"><i
-					class="fa fa-home"></i> Home</a> <a href="${ctx}/student/create"
+					class="fa fa-home"></i> Home</a> <a href="${ctx}/admin/student/create"
 					class="current"><button class="btn" type="button">添加学生</button></a>
 			</div>
 			<div class="row">
@@ -219,7 +219,7 @@ $(document).ready(function(){
 											<td class="taskOptions"><a class="tip-top"
 												data-original-title="详情" id="bootbox-custom-html-forms"
 												onclick="detail()"> <i class="fa fa-eye"></i>
-											</a>&nbsp;<a href="${ctx}/student/update/${student.id}" class="tip-top"
+											</a>&nbsp;<a href="${ctx}/admin/student/update/${student.id}" class="tip-top"
 												data-original-title="修改"> <i class="fa fa-pencil"></i></a>&nbsp; <a
 												class="tip-top" data-original-title="删除" id="bootbox-alert"
 												onclick="deleteConfirm(${student.id},'${student.username}')">

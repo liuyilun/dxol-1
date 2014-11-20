@@ -41,7 +41,7 @@ import dxol.service.summary.SummaryService;
  * @author liuwei 实现学生信息增、删、查
  */
 @Controller
-@RequestMapping(value = "/student")
+@RequestMapping(value = "/admin/student")
 public class StudentController {
 	@Autowired
 	private StudentService studentService;
@@ -187,7 +187,7 @@ public class StudentController {
 		redirectAttributes.addFlashAttribute("message",
 				"创建" + newstudent.getUsername() + "成功");
 
-		return "redirect:/student/";
+		return "redirect:/admin/student/";
 	}
 
 	// 删除当前用户
@@ -203,7 +203,7 @@ public class StudentController {
 			summaryService.deletesummary(summary.getId());
 		studentService.deleteStudent(id);
 		redirectAttributes.addFlashAttribute("message", "删除任务成功");
-		return "redirect:/student/";
+		return "redirect:/admin/student/";
 	}
 
 }

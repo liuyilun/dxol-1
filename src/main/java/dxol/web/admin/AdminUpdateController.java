@@ -27,7 +27,7 @@ import dxol.service.school.SchoolService;
  * @author liuwei 实现管理员信息增、删、查
  */
 @Controller
-@RequestMapping(value = "/manager")
+@RequestMapping(value = "/admin/manager")
 public class AdminUpdateController {
 	@Autowired
 	private AdminService adminService;
@@ -53,7 +53,7 @@ public class AdminUpdateController {
 		adminService.updateAdmin(admin);
 		redirectAttributes.addFlashAttribute("message",
 				"更新" + admin.getUsername() + "成功");
-		return "redirect:/manager/";
+		return "redirect:/admin/manager/";
 	}
 
 	/**

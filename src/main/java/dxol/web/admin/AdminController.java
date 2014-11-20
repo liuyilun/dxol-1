@@ -27,7 +27,7 @@ import dxol.service.school.SchoolService;
  * @author liuwei 实现管理员信息增、删、查
  */
 @Controller
-@RequestMapping(value = "/manager")
+@RequestMapping(value = "/admin/manager")
 public class AdminController {
 	private AdminService adminService;
 
@@ -76,7 +76,7 @@ public class AdminController {
 		adminService.saveAdmin(newadmin);
 		redirectAttributes.addFlashAttribute("message",
 				"创建" + newadmin.getUsername() + "成功");
-		return "redirect:/manager/";
+		return "redirect:/admin/manager/";
 	}
 
 	@RequestMapping(value = "delete/{id}")
@@ -84,7 +84,7 @@ public class AdminController {
 			RedirectAttributes redirectAttributes) {
 		adminService.deleteAdmin(id);
 		redirectAttributes.addFlashAttribute("message", "删除任务成功");
-		return "redirect:/manager/";
+		return "redirect:/admin/manager/";
 	}
 	/*
 	 * // 当点击修改时，跳转到修改页面

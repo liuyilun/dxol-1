@@ -85,7 +85,7 @@
 						<!-- <span class="label label-danger">48 notices</span> -->
 					</div>
 					<div class="widget-content nopadding">
-						<form id="basic_validate" action="${ctx}/manager/save/${admin.id}"
+						<form id="basic_validate" action="${ctx}/admin/manager/save/${admin.id}"
 							method="post" class="form-horizontal" name="basic_validate"
 							novalidate="novalidate">
 							<input type="hidden" name="id" value="${admin.id}" />

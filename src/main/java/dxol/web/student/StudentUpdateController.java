@@ -25,7 +25,7 @@ import dxol.service.student.StudentService;
  * @author liuwei 实现学生信息修改
  */
 @Controller
-@RequestMapping(value = "/student")
+@RequestMapping(value = "/admin/student")
 public class StudentUpdateController {
 	private StudentService studentService;
 	@Autowired
@@ -64,7 +64,7 @@ public class StudentUpdateController {
 		studentService.updateStudent(student);
 		redirectAttributes.addFlashAttribute("message",
 				"更新" + student.getUsername() + "成功");
-		return "redirect:/student/";
+		return "redirect:/admin/student/";
 	}
 
 	/**
