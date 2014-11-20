@@ -12,7 +12,7 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#student_tab").addClass("active");
+	$(".student_tab").addClass("active");
 	var message="${message}" /* getUrlParam("message") */;
 	if(message!= null){
 		bootbox.alert(message);
@@ -44,7 +44,7 @@ $(document).ready(function(){
 	function success(message) {
 		bootbox.prompt(message);
 	}
-	function detail(){
+	function detail(id){
 		bootbox.dialog({
             title: "学生详细信息",
             message: '<div class="row">  ' +
@@ -114,6 +114,156 @@ $(document).ready(function(){
 										'<td>${student.identity.identityName}</td>'+
 										'</tr></c:forEach></tbody></table></div></div></div></div></div>',
 										className:"my-modal",
+										
+										'<div class="widget-content nopadding">'+		
+										'<div class="form-group">'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">用户名(学号)</label>'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'<input type="text" id="username" name="username" readonly="readonly" value="${student.username}" />'+
+										'</div></div>'+
+										'<div class="form-group">'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">姓名</label>'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'<input type="text" class="form-control input-sm" name="name" id="name" readonly="readonly" value="${student.name}">'+
+										'</div></div>'+
+										'<div class="form-group">'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">性别</label>'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'<c:if test="${student.sex==0}">'+
+										'<input type="text" class="form-control input-sm" name="sex" id="sex" readonly="readonly" value="女">'+
+										'</c:if>'+
+										'<c:if test="${student.sex==1}">'+
+										'<input type="text" class="form-control input-sm" name="sex" id="sex" readonly="readonly" value="男">'+
+										'</c:if>'+
+										'</div></div>'+
+										'<div class="form-group">'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">角色</label>'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'<c:if test="${student.role=='admin'}">'+
+										'<input type="text" class="form-control input-sm" name="role" id="role" readonly="readonly" value="管理员">'+
+										'</c:if>'+
+										'<c:if test="${student.role=='student'}">'+
+										'<input type="text" class="form-control input-sm" name="role" id="role" readonly="readonly" value="学生">'+
+										'</c:if>'+
+										'</div></div>'+
+										'<div class="form-group">'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">注册日期</label>'+
+										'<input type="text" class="form-control input-sm" name="registerDate" id="registerDate" readonly="readonly" value="${student.registerDate}">'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'</div></div>'+
+										'<div class="form-group">'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">学院</label>'+
+										'<input type="text" class="form-control input-sm" name="school.name" id="school.name" readonly="readonly" value="${student.school.name}">'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'</div></div>'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">专业</label>'+
+										'<input type="text" class="form-control input-sm" name="depart" id="depart" readonly="readonly" value="${student.depart}">'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'</div></div>'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">选修课已修学时</label>'+
+										'<input type="text" class="form-control input-sm" name="altHour" id="altHour" readonly="readonly" value="${student.altHour}">'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'</div></div>'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">必修课已修学时</label>'+
+										'<input type="text" class="form-control input-sm" name="reqHour" id="reqHour" readonly="readonly" value="${student.reqHour}">'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'</div></div>'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">成绩</label>'+
+										'<input type="text" class="form-control input-sm" name="grade" id="grade" readonly="readonly" value="${student.grade}">'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'</div></div>'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">剩余考试次数</label>'+
+										'<input type="text" class="form-control input-sm" name="examTime" id="examTime" readonly="readonly" value="${student.examTime}">'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'</div></div>'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">学习总结</label>'+
+										'<input type="text" class="form-control input-sm" name="summary.fileName" id="summary.fileName" readonly="readonly" value="${student.summary.fileName}">'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'</div></div>'+
+										'<label class="col-sm-3 col-md-3 col-lg-2 control-label">学习总结上传（更新）时间</label>'+
+										'<input type="text" class="form-control input-sm" name="summaryUpTime" id="summaryUpTime" readonly="readonly" value="${student.summaryUpTime}">'+
+										'<div class="col-sm-9 col-md-9 col-lg-10">'+
+										'</div></div>'+
+										'<td>'+
+										'<td>'+
+										'<td>'+
+										'<td>'+
+										'<td>'+
+										'<td>'+
+										'<td>'+
+										'<td>'+
+										'<td>'+
+										'<td>'+
+			
+				
+				
+					
+				
+		
+			
+				
+				
+					
+			
+			
+				
+				
+					
+			
+			
+				
+				
+			
+
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label">学院</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
+					<span style="font-size: 18px;"> <select id="school_id"
+						name="school_id">
+							<c:forEach items="${schools}" var="school">
+								<option value="${school.id }"
+									<c:if test="${student.school.id==school.id}">
+												<c:out value="selected"/>
+												</c:if>>
+									${school.name}</option>
+							</c:forEach>
+					</select></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label">专业</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
+					<input type="text" class="form-control input-sm" name="depart"
+						id="depart" value="${student.depart}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 col-md-3 col-lg-2 control-label">身份</label>
+				<div class="col-sm-9 col-md-9 col-lg-10">
+					<span style="font-size: 18px;"> <select id="identity_id"
+						name="identity_id">
+							<c:forEach items="${identities}" var="identity">
+								<option value="${identity.id }"
+									<c:if test="${student.identity.id==identity.id}">
+												<c:out value="selected"/>
+												</c:if>>
+									${identity.identityName}</option>
+							</c:forEach>
+					</select></span>
+				</div>
+			</div>
+
+			<div class="form-actions">
+				<!-- <input type="submit" value="Validate" class="btn btn-primary"> -->
+				<input id="submit_btn" class="btn btn-primary" type="submit"
+					value="保存" />&nbsp; <input id="cancel_btn" class="btn"
+					type="button" value="返回" onclick="history.back()" />
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+</div>
+</div>
 		
 		});
 	} 
