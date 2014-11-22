@@ -13,6 +13,10 @@ import javax.persistence.Table;
 @Table(name = "ol_student_course")
 public class StudentCourse implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	private Long student_id;
 	@Id

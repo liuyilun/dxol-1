@@ -6,7 +6,7 @@
 <head>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#admin_tab").addClass("active");
+	$(".admin_tab").addClass("active");
 	var message="${message}" /* getUrlParam("message") */;
 	if(message!= null){
 		bootbox.alert(message);

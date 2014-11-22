@@ -24,12 +24,15 @@ import org.springside.modules.web.Servlets;
 import com.google.common.collect.Maps;
 
 import dxol.entity.Admin;
+import dxol.entity.Course;
 import dxol.entity.Identity;
 import dxol.entity.School;
 import dxol.entity.Student;
 import dxol.entity.Summary;
+import dxol.repository.CourseDao;
 import dxol.service.account.ShiroDbRealm.ShiroUser;
 import dxol.service.admin.AdminService;
+import dxol.service.course.CourseService;
 import dxol.service.identity.IdentityService;
 import dxol.service.school.SchoolService;
 import dxol.service.student.StudentService;
@@ -53,7 +56,9 @@ public class StudentController {
 	private SchoolService schoolService;
 	@Autowired
 	private IdentityService identityService;
-	private static final String PAGE_SIZE = "3";
+	@Autowired
+	private CourseDao courseDao;
+	//private static final String PAGE_SIZE = "3";
 
 	private static Map<String, String> sortTypes = Maps.newLinkedHashMap();
 	static {
@@ -183,7 +188,15 @@ public class StudentController {
 		Identity identity=new Identity();
 		identity.setId(identityId);
 		newstudent.setIdentity(identity);
+		List<Course> courses=courseDao.findbyIdentityId(identityId);
+		
+		for (Course course : courses) {
+			/*newstudent.getCourses().add(course);*/
+			System.out.println("++++++++"+course);
+
+		}
 		studentService.saveStudent(newstudent);
+		
 		redirectAttributes.addFlashAttribute("message",
 				"创建" + newstudent.getUsername() + "成功");
 
@@ -205,5 +218,10 @@ public class StudentController {
 		redirectAttributes.addFlashAttribute("message", "删除任务成功");
 		return "redirect:/admin/student/";
 	}
-
+	@RequestMapping(value = "detail/{id}")
+	public void detail(@PathVariable("id") Long id,
+			Model model) {
+		Student student = studentService.findStudentbyName(id);
+		model.addAttribute("student", student);
+}
 }

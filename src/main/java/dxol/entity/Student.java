@@ -10,6 +10,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.assertj.core.util.Lists;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -33,6 +35,14 @@ public class Student extends User {
 
 
 	
+	/*public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}*/
+
 	public String getDepart() {
 		return depart;
 	}

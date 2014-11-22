@@ -23,6 +23,7 @@ import dxol.entity.Summary;
 import dxol.entity.User;
 import dxol.repository.StudentDao;
 
+
 /**
  * 学生管理类.
  * 
@@ -37,6 +38,7 @@ public class StudentService {
 	private static final int SALT_SIZE = 8;
 	private Clock clock = Clock.DEFAULT;
 	private StudentDao studentDao;
+	
 
 	@Autowired
 	public void setStudentDao(StudentDao studentDao) {
@@ -62,6 +64,7 @@ public class StudentService {
 			entryptPassword(student);
 		}
 		student.setRegisterDate(clock.getCurrentDate());
+		
 		studentDao.save(student);
 	}
 	public void updateStudent(Student student) {
