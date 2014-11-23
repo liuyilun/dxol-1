@@ -1,6 +1,7 @@
 package dxol.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -29,19 +30,20 @@ public class Student extends User {
 	private Summary summary;
 	private Identity identity;
 
-	@OneToMany(mappedBy = "students")
-	private List<Course> courses;
+	
+	private List<StudentCourse> courses=Lists.newArrayList();
 
 
 
 	
-	/*public List<Course> getCourses() {
+	@OneToMany(mappedBy = "student")
+	public List<StudentCourse> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(List<Course> courses) {
+	public void setCourses(List<StudentCourse> courses) {
 		this.courses = courses;
-	}*/
+	}
 
 	public String getDepart() {
 		return depart;

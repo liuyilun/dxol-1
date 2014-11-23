@@ -22,6 +22,7 @@ import dxol.entity.Student;
 import dxol.service.identity.IdentityService;
 import dxol.service.school.SchoolService;
 import dxol.service.student.StudentService;
+import dxol.service.summary.SummaryService;
 import dxol.util.FileOperateUtil;
 
 /**
@@ -38,7 +39,8 @@ public class StudentUpdateController {
 	private SchoolService schoolService;
 	@Autowired
 	private IdentityService identityService;
-	
+	@Autowired
+	private SummaryService summaryService;
 	@Autowired
 	public void setStudentService(StudentService studentService) {
 		this.studentService = studentService;
@@ -71,8 +73,9 @@ public class StudentUpdateController {
 		student.setIdentity(identity);
 		System.out.println(identityId+"---------"+id);
 		Student student2=studentService.findStudentbyName(id);
-		System.out.println("+++++++"+student2.getIdentity().getId());
+		System.out.println(student2.getSummary().getPath()+"+++++++"+student2.getIdentity().getId());
 		if(student2.getIdentity().getId()!=identityId){
+			summaryService.deletesummary(student2.getSummary().getId());
 			student.setGrade(0);
 			student.setReqHour(0);
 			student.setAltHour(0);
@@ -81,11 +84,16 @@ public class StudentUpdateController {
 			String ctxPath = request.getSession().getServletContext()
 					.getRealPath("/")
 					+ StudentUpdateController.UPLOADDIR; // 获得服务器上存放下载资源的地址
-			File file=new File(ctxPath);
-			if(file.exists())
-			file.delete();
+			System.out.println(ctxPath);
+			/*String storeName = student2.getSummary().getPath();
+			String downLoadPath = ctxPath + storeName; 
+			File file=new File(downLoadPath);
+			if(file.exists() && file.isFile())
+			file.delete();*/
 		}
 		student.setRegisterDate(student2.getRegisterDate());
+		student.setPassword(student2.getPassword());
+		student.setSalt(student2.getSalt());
 		studentService.updateStudent(student);
 		redirectAttributes.addFlashAttribute("message",
 				"更新" + student.getUsername() + "成功");

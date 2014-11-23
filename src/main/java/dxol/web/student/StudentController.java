@@ -1,5 +1,6 @@
 package dxol.web.student;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import dxol.entity.Course;
 import dxol.entity.Identity;
 import dxol.entity.School;
 import dxol.entity.Student;
+import dxol.entity.StudentCourse;
 import dxol.entity.Summary;
 import dxol.repository.CourseDao;
 import dxol.service.account.ShiroDbRealm.ShiroUser;
@@ -109,8 +111,6 @@ public class StudentController {
 		List<Student> students = studentService.findAllStudent();
 
 		model.addAttribute("students", students);
-		System.out.println("<<<<<<<<-----------<<<<<<<");
-		System.out.println(students);
 		/*
 		 * List<Admin> admins=adminService.findAllAdmin();
 		 * System.out.println("<<<<<<<<-----------<<<<<<<");
@@ -189,12 +189,21 @@ public class StudentController {
 		identity.setId(identityId);
 		newstudent.setIdentity(identity);
 		List<Course> courses=courseDao.findbyIdentityId(identityId);
-		
+		//List<StudentCourse> studentCourses=new ArrayList<StudentCourse>();
 		for (Course course : courses) {
 			/*newstudent.getCourses().add(course);*/
-			System.out.println("++++++++"+course);
+			System.out.println("#######"+course.getId());
+			StudentCourse studentCourse=new StudentCourse();
+			studentCourse.setCourse(course);
+			studentCourse.setStudent(newstudent);
+			studentCourse.setTime(0);
+			studentCourse.setHour(0);
+			newstudent.getCourses().add(studentCourse);
+			course.getStudents().add(studentCourse);
+			//studentCourses.add(studentCourse);
 
 		}
+		//newstudent.setCourses(studentCourses);
 		studentService.saveStudent(newstudent);
 		
 		redirectAttributes.addFlashAttribute("message",

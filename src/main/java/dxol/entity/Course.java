@@ -8,6 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.google.common.collect.Lists;
+
 @Entity
 @Table(name = "ol_course")
 public class Course extends IdEntityBase {
@@ -17,8 +19,16 @@ public class Course extends IdEntityBase {
 	private int reqAlt;
 	private String content;
 
-	@OneToMany(mappedBy = "courses")
-	private List<Student> students;
+
+	private List<StudentCourse> students=Lists.newArrayList();;
+	@OneToMany(mappedBy = "course")
+	public List<StudentCourse> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<StudentCourse> students) {
+		this.students = students;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "identity_id")
