@@ -59,7 +59,7 @@ public class StudentController {
 	@Autowired
 	private IdentityService identityService;
 	@Autowired
-	private CourseDao courseDao;
+	private CourseService courseService;
 	//private static final String PAGE_SIZE = "3";
 
 	private static Map<String, String> sortTypes = Maps.newLinkedHashMap();
@@ -69,12 +69,15 @@ public class StudentController {
 	}
 
 	/**
-	 * 取出Shiro中的当前用户Id.
+	 * 取出Shiro中的当前用户的学院信息.
 	 */
-	/*
-	 * private Long getCurrentUserId() { ShiroUser user = (ShiroUser)
-	 * SecurityUtils.getSubject().getPrincipal(); return user.id; }
-	 */
+	
+	  private Long getCurrentUserschool() {
+	 ShiroUser user = (ShiroUser)SecurityUtils.getSubject().getPrincipal(); 
+	 Admin admin=adminService.findAdminbyName(user.id); 
+	 return admin.getSchool().getId();
+	 }
+	 
 	// 查询所有的学生，让他们显示在studentList.jsp页面
 	@RequestMapping(value = { "list", "" })
 	/*
@@ -108,9 +111,16 @@ public class StudentController {
 	 * }
 	 */
 	public String list(Model model) {
-		List<Student> students = studentService.findAllStudent();
+		if(SecurityUtils.getSubject().hasRole("super")){
+			List<Student> students = studentService.findAllStudent();
+			model.addAttribute("students", students);
+		}
+		else if(SecurityUtils.getSubject().hasRole("admin")){
+			List<Student> students=studentService.findstudentbyschool(getCurrentUserschool());
+			model.addAttribute("students", students);
+		}
 
-		model.addAttribute("students", students);
+		
 		/*
 		 * List<Admin> admins=adminService.findAllAdmin();
 		 * System.out.println("<<<<<<<<-----------<<<<<<<");
@@ -188,7 +198,7 @@ public class StudentController {
 		Identity identity=new Identity();
 		identity.setId(identityId);
 		newstudent.setIdentity(identity);
-		List<Course> courses=courseDao.findbyIdentityId(identityId);
+		List<Course> courses=courseService.getCourseByIdentityId(identityId);
 		//List<StudentCourse> studentCourses=new ArrayList<StudentCourse>();
 		for (Course course : courses) {
 			/*newstudent.getCourses().add(course);*/

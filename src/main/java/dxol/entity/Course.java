@@ -20,6 +20,8 @@ public class Course extends IdEntityBase {
 	private String content;
 
 
+	
+
 	private List<StudentCourse> students=Lists.newArrayList();;
 	@OneToMany(mappedBy = "course")
 	public List<StudentCourse> getStudents() {

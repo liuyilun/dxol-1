@@ -2,11 +2,14 @@ package dxol.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ol_exam_info")
 public class ExamInfo extends IdEntityBase {
+	private Identity identity;
 
 	private String questionInfo;
 
@@ -18,6 +21,16 @@ public class ExamInfo extends IdEntityBase {
 
 	private String choiceD;
 	private String rightAnswer;
+	
+	@ManyToOne
+	@JoinColumn(name = "identity_id")
+	public Identity getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(Identity identity) {
+		this.identity = identity;
+	}
 
 	public String getQuestionInfo() {
 		return questionInfo;

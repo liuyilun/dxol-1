@@ -5,6 +5,7 @@
  *******************************************************************************/
 package dxol.service.account;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ import org.springside.modules.security.utils.Digests;
 import org.springside.modules.utils.Clock;
 import org.springside.modules.utils.Encodes;
 
+import dxol.entity.Admin;
+import dxol.entity.Student;
 import dxol.entity.User;
 import dxol.repository.AdminDao;
 import dxol.repository.StudentDao;
@@ -47,9 +50,7 @@ public class AccountService {
 	// return (List<User>) userDao.findAll();
 	// }
 	//
-	// public User getUser(Long id) {
-	// return userDao.findOne(id);
-	// }
+
 	//
 	// public User findUserByLoginName(String loginName) {
 	// return userDao.findByLoginName(loginName);
@@ -63,12 +64,17 @@ public class AccountService {
 	// userDao.save(user);
 	// }
 	//
-	// public void updateUser(User user) {
-	// if (StringUtils.isNotBlank(user.getPlainPassword())) {
-	// entryptPassword(user);
-	// }
-	// userDao.save(user);
-	// }
+	public void updateUser(User user, String method) {
+		if (StringUtils.isNotBlank(user.getPlainPassword())) {
+			entryptPassword(user);
+		}
+		if (method.equals(ADMIN_METHOD)) {
+			adminDao.save((Admin) user);
+		} else if (method.equals(STUDENT_METHOD)) {
+			studentDao.save((Student) user);
+		}
+	}
+
 	//
 	// public void deleteUser(Long id) {
 	// if (isSupervisor(id)) {
@@ -128,5 +134,13 @@ public class AccountService {
 		} else {
 			return null;
 		}
+	}
+
+	public Admin getAdmin(Long id) {
+		return adminDao.findOne(id);
+	}
+
+	public void updateAdmin(User user) {
+		updateUser(user, ADMIN_METHOD);
 	}
 }

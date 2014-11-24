@@ -79,7 +79,10 @@ public class StudentService {
 		return student.getSummary();
 
 	}
-
+	
+	public List<Student> findstudentbyschool(Long schoolid){
+		return (List<Student>)studentDao.findbySchoolId(schoolid);
+	}
 	public List<Student> findAllStudent() {
 		return (List<Student>) studentDao
 				.findAll(new Sort(Direction.ASC, "id"));
