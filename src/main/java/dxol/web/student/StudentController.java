@@ -8,9 +8,11 @@ import javassist.expr.NewArray;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpRequest;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -38,6 +40,7 @@ import dxol.service.course.CourseService;
 import dxol.service.identity.IdentityService;
 import dxol.service.school.SchoolService;
 import dxol.service.student.StudentService;
+import dxol.service.studentcourse.StudentCourseService;
 import dxol.service.summary.SummaryService;
 
 /**
@@ -60,7 +63,9 @@ public class StudentController {
 	private IdentityService identityService;
 	@Autowired
 	private CourseService courseService;
-	//private static final String PAGE_SIZE = "3";
+	@Autowired
+	private StudentCourseService studentCourseService;
+	// private static final String PAGE_SIZE = "3";
 
 	private static Map<String, String> sortTypes = Maps.newLinkedHashMap();
 	static {
@@ -71,15 +76,14 @@ public class StudentController {
 	/**
 	 * 取出Shiro中的当前用户的学院信息.
 	 */
-	
-	  private Long getCurrentUserschool() {
-	 ShiroUser user = (ShiroUser)SecurityUtils.getSubject().getPrincipal(); 
-	 Admin admin=adminService.findAdminbyName(user.id); 
-	 return admin.getSchool().getId();
-	 }
-	 
+
+	private Long getCurrentUserschool() {
+		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+		Admin admin = adminService.findAdminbyName(user.id);
+		return admin.getSchool().getId();
+	}
+
 	// 查询所有的学生，让他们显示在studentList.jsp页面
-	@RequestMapping(value = { "list", "" })
 	/*
 	 * public String list(@RequestParam(value = "page", defaultValue = "1") int
 	 * pageNumber,
@@ -110,22 +114,16 @@ public class StudentController {
 	 * 
 	 * }
 	 */
+	@RequestMapping(value = { "list", "" })
 	public String list(Model model) {
-		if(SecurityUtils.getSubject().hasRole("super")){
+		if (SecurityUtils.getSubject().hasRole("super")) {
 			List<Student> students = studentService.findAllStudent();
 			model.addAttribute("students", students);
-		}
-		else if(SecurityUtils.getSubject().hasRole("admin")){
-			List<Student> students=studentService.findstudentbyschool(getCurrentUserschool());
+		} else if (SecurityUtils.getSubject().hasRole("admin")) {
+			List<Student> students = studentService
+					.findstudentbyschool(getCurrentUserschool());
 			model.addAttribute("students", students);
 		}
-
-		
-		/*
-		 * List<Admin> admins=adminService.findAllAdmin();
-		 * System.out.println("<<<<<<<<-----------<<<<<<<");
-		 * System.out.println(admins);
-		 */
 		return "/admin/view/student/studentList";
 
 	}
@@ -135,13 +133,9 @@ public class StudentController {
 	public String createForm(Model model) {
 		model.addAttribute("student", new Student());
 		List<School> schools = schoolService.findAllSchool();
-		List<Identity> identities=identityService.findAllIdentity();
-		model.addAttribute("identities",identities);
+		List<Identity> identities = identityService.findAllIdentity();
+		model.addAttribute("identities", identities);
 		model.addAttribute("schools", schools);
-		/*
-		 * Summary summary = new Summary(); summaryService.savesummary(summary);
-		 * model.addAttribute("summary", summary);
-		 */
 		return "/admin/view/student/studentForm";
 	}
 
@@ -151,71 +145,30 @@ public class StudentController {
 			RedirectAttributes redirectAttributes,
 			@RequestParam(value = "school_id") Long schoolId,
 			@RequestParam(value = "identity_id") Long identityId) {
-		System.out.println("<<<<<<<<<<<<<<<<--------->>>");
-		// System.out.println(request.getParameter("school_id"));
-		System.out.println(schoolId);
-		System.out.println(identityId);
-		/*
-		 * String fileName = newstudent.getSummary().getFileName();
-		 * System.out.println("----------->" + fileName);
-		 */
-		/*String identityName = newstudent.getIdentity().getIdentityName();
-		System.out.println("----------->" + identityName);
-*/
-		/*
-		 * String schoolName = newstudent.getSchool().getName();
-		 * System.out.println("----------->" + schoolName);
-		 */
-		// newsummary.setFileName(fileName);
-		// summary.setStudent(newstudent);
-		/*
-		 * System.out.println("----------->" + newsummary.getFileName()); //
-		 * System
-		 * .out.println("----------->"+summary.getStudent().getSchool().getName
-		 * ()); System.out.println("----------->" + newsummary.getId());
-		 * System.out.println("----------->" + newstudent.getId());
-		 */
-		// newstudent.setSummary(newsummary);
-		// summaryService.savesummary(newsummary);
-		// 找出数据库中所有的身份信息
-		/*List<Identity> identities = identityService.findAllIdentity();
-		// 将管理员输入的身份名与数据库中的身份名对比，找到相同的就将该相同身份名所对应的identity对象保存到student中
-		// 从而实现数据库中student中identity_id字段的更新
-		for (Identity identity : identities) {
-			if (identityName.equals(identity.getIdentityName())) {
-				newstudent.setIdentity(identity);
-			}
-
-		}*/
-		/*
-		 * List<School> schools = schoolService.findAllSchool(); for (School
-		 * school : schools) { if (schoolName.equals(school.getName())) {
-		 * newstudent.setSchool(school); } }
-		 */
 		School school = new School();
 		school.setId(schoolId);
 		newstudent.setSchool(school);
-		Identity identity=new Identity();
+		Identity identity = new Identity();
 		identity.setId(identityId);
 		newstudent.setIdentity(identity);
-		List<Course> courses=courseService.getCourseByIdentityId(identityId);
+		List<Course> courses = courseService.getCourseByIdentityId(identityId);
 		//List<StudentCourse> studentCourses=new ArrayList<StudentCourse>();
 		for (Course course : courses) {
-			/*newstudent.getCourses().add(course);*/
-			System.out.println("#######"+course.getId());
-			StudentCourse studentCourse=new StudentCourse();
-			studentCourse.setCourse(course);
-			studentCourse.setStudent(newstudent);
+			System.out.println("#######" + course.getId());
+			StudentCourse studentCourse = new StudentCourse();
+			studentCourse.setCourse_id(course.getId());;
+			studentCourse.setStudent_id(newstudent.getId());;
 			studentCourse.setTime(0);
 			studentCourse.setHour(0);
-			newstudent.getCourses().add(studentCourse);
-			course.getStudents().add(studentCourse);
+			//newstudent.getCourses().add(studentCourse);
+			//course.getStudents().add(studentCourse);
 			//studentCourses.add(studentCourse);
+			studentCourseService.saveStudentCourse(studentCourse);
 
 		}
 		//newstudent.setCourses(studentCourses);
 		studentService.saveStudent(newstudent);
-		
+		 
 		redirectAttributes.addFlashAttribute("message",
 				"创建" + newstudent.getUsername() + "成功");
 
@@ -229,18 +182,18 @@ public class StudentController {
 			RedirectAttributes redirectAttributes) {
 		Student student = studentService.findStudentbyName(id);
 		// 现根据学生id找到对应的summary，再根据summaryid将该summary删除 Summary
-	
+
 		Summary summary = student.getSummary(); // summary.setId(id);
-		if (summary!=null&&summary.getId() != null)
+		if (summary != null && summary.getId() != null)
 			summaryService.deletesummary(summary.getId());
 		studentService.deleteStudent(id);
 		redirectAttributes.addFlashAttribute("message", "删除任务成功");
 		return "redirect:/admin/student/";
 	}
+
 	@RequestMapping(value = "detail/{id}")
-	public void detail(@PathVariable("id") Long id,
-			Model model) {
+	public void detail(@PathVariable("id") Long id, Model model) {
 		Student student = studentService.findStudentbyName(id);
 		model.addAttribute("student", student);
-}
+	}
 }
