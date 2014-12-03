@@ -2,8 +2,6 @@ package dxol.repository;
 
 import java.util.List;
 
-import javax.naming.LimitExceededException;
-
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
