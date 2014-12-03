@@ -2,6 +2,8 @@ package dxol.service.examinfo;
 
 import java.util.List;
 import java.util.Map;
+
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,14 +13,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import dxol.entity.ExamInfo;
+import dxol.entity.Student;
 import dxol.repository.ExaminfoDao;
+import dxol.service.account.ShiroDbRealm.ShiroUser;
+import dxol.service.student.StudentService;
 
 // ExamInfo Bean的标识.
 @Component
 // 类中所有public函数都纳入事务管理的标识.
 @Transactional
 public class ExaminfoService  {
-
+	@Autowired
+	private StudentService studentService;
 	private ExaminfoDao examinfoDao;
 
 	public ExamInfo getExaminfo(Long id) {
@@ -70,5 +76,11 @@ public class ExaminfoService  {
 	@Autowired
 	public void setExaminfoDao(ExaminfoDao examinfoDao) {
 		this.examinfoDao = examinfoDao;
+	}
+
+	public List<ExamInfo> getRandExaminfo() {
+		// TODO Auto-generated method stub
+
+		return examinfoDao.findbyIdentityId();
 	}
 }

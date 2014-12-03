@@ -348,7 +348,8 @@
             Days: {
                 show: true,
                 text: "Days",
-                color: "#FC6"
+                color: "#FC6",
+               
             },
             Hours: {
                 show: true,

@@ -15,32 +15,44 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
-
-
-
-
-
-
-
 import dxol.entity.Course;
+import dxol.entity.Student;
 import dxol.repository.CourseDao;
+import dxol.service.student.StudentService;
+import dxol.service.studentcourse.StudentCourseService;
 
 // Course Bean的标识.
 @Component
 @Transactional
 public class CourseService {
 
+	@Autowired
 	private CourseDao courseDao;
+	@Autowired
+	private StudentService studentService;
+	@Autowired
+	private StudentCourseService studentCourseService;
+	
 
-	public Course getCourse(Long id) {
-		return courseDao.findOne(id);
+	public Object[][]  getCourse(Long id) {
+		return courseDao.findById(id);
 	}
 
-	public void saveCourse(Course entity) {
-		courseDao.save(entity);
+	public void saveCourse(Course course) {
+		courseDao.save(course);
+		System.out.println(course.getIdentity().getId()+"------");
+		List<Long> students = studentService.getStudentByIdentityId(course.getIdentity().getId());
+		for(Long studentid : students){
+			Student student = new Student();
+			student.setId(studentid);
+			course.addStudent(student);
+		}
+		studentCourseService.saveStudentCourse(course.getStudents());
+
 	}
 	public void deleteCourse(Long id) {
 		courseDao.delete(id);
+		studentCourseService.deleteStudentCourseByCourseId(id);
 	}
 
 	public List<Course> getAllCourse() {

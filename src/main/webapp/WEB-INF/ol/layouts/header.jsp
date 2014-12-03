@@ -117,10 +117,10 @@
                             <a class="active" href="index.html"><i class="fa fa-dashboard fa-fw"></i> 在线学习</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> 在线考试</a>
+                            <a href="${ctx}/ol/test"><i class="fa fa-table fa-fw"></i> 在线考试</a>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> 学习总结</a>
+                            <a href=""><i class="fa fa-table fa-fw"></i> 学习总结</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>

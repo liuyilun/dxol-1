@@ -13,7 +13,15 @@ import dxol.repository.StudentCourseDao;
 public class StudentCourseService {
 	@Autowired
 	private StudentCourseDao studentCourseDao ;
-	public void saveStudentCourse(StudentCourse studentCourse ){
-		studentCourseDao.save(studentCourse);
+	public void saveStudentCourse(StudentCourse list ){
+		studentCourseDao.save(list);
 	}
+	public void saveStudentCourse(Iterable<StudentCourse> studentCourses ){
+		studentCourseDao.save(studentCourses);
+	}
+
+	public void deleteStudentCourseByCourseId(Long id) {
+		studentCourseDao.deleteByCourseId(id);
+	}
+	
 }

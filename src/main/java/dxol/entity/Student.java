@@ -1,10 +1,8 @@
 package dxol.entity;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,32 +17,20 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name = "ol_student")
 public class Student extends User {
+
 	private String depart;
 	private Integer sex;
-	private Integer grade;
-	private Integer isFinish;
-	private Integer altHour;
-	private Integer reqHour;
-	private Integer examTime;
+	private Integer grade = 0;
+	private Integer isFinish = 1;
+	private Integer altHour = 0;
+	private Integer reqHour = 0;
+	private Integer examTime = 2;
 	private Date summaryUpTime;
 	private School school;
 	private Summary summary;
 	private Identity identity;
 
-	
-	private List<StudentCourse> courses=Lists.newArrayList();
-
-
-
-	
-	@OneToMany(mappedBy = "student")
-	public List<StudentCourse> getCourses() {
-		return courses;
-	}
-
-	public void setCourses(List<StudentCourse> courses) {
-		this.courses = courses;
-	}
+	private List<StudentCourse> courses;
 
 	public String getDepart() {
 		return depart;
@@ -102,7 +88,7 @@ public class Student extends User {
 		this.examTime = examTime;
 	}
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+08:00")
 	public Date getSummaryUpTime() {
 		return summaryUpTime;
 	}
@@ -110,6 +96,7 @@ public class Student extends User {
 	public void setSummaryUpTime(Date summaryUpTime) {
 		this.summaryUpTime = summaryUpTime;
 	}
+
 	@ManyToOne
 	@JoinColumn(name = "school_id")
 	public School getSchool() {
@@ -138,6 +125,32 @@ public class Student extends User {
 
 	public void setIdentity(Identity identity) {
 		this.identity = identity;
+	}
+
+	@OneToMany(mappedBy = "student")
+	public List<StudentCourse> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<StudentCourse> courses) {
+		this.courses = courses;
+	}
+
+	public void addCourse(Course course) {
+		StudentCourse newStudentCourse = new StudentCourse();
+
+		if (this.courses == null) {
+			courses = Lists.newArrayList();
+		}
+
+		newStudentCourse.setStudent(this);
+		newStudentCourse.setCourse(course);
+
+		newStudentCourse.setStudentId(this.getId());
+		newStudentCourse.setCourseId(course.getId());
+
+		this.courses.add(newStudentCourse);
+		course.getStudents().add(newStudentCourse);
 	}
 
 }

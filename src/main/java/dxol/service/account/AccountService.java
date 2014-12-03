@@ -128,7 +128,9 @@ public class AccountService {
 
 	public User findUserByLoginNameAndMethod(String username, String method) {
 		if (method.equals(ADMIN_METHOD)) {
-			return adminDao.findByUsername(username);
+			Admin admin = adminDao.findByUsername(username);
+			System.out.println("admin------------- " + admin.getName());
+			return admin;
 		} else if (method.equals(STUDENT_METHOD)) {
 			return studentDao.findByUsername(username);
 		} else {

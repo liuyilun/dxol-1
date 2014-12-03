@@ -2,6 +2,7 @@ package dxol.web.course;
 
 
 import java.util.Map;
+
 import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.web.Servlets;
+
 import com.google.common.collect.Maps;
 
 import dxol.entity.Course;
@@ -106,6 +110,20 @@ public class CourseController{
 		courseService.deleteCourse(id);
 		redirectAttributes.addFlashAttribute("message", "删除课程成功");
 		return "redirect:/admin/course";
+	}
+	
+	@RequestMapping(value = "view/{id}" ,method = RequestMethod.GET)
+    @ResponseBody
+	public Course view(@PathVariable("id") Long id){
+		
+		Object[][] cc = courseService.getCourse(id);
+		Course c = new Course();
+		System.out.println(cc);
+		c.setId((Long) cc[0][0]);
+		c.setCourseName((String) cc[0][1]);
+		c.setContent((String) cc[0][2]);
+		System.out.println(c);
+		return c;
 	}
 
 	/**

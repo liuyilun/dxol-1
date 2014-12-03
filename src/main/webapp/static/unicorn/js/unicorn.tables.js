@@ -6,11 +6,7 @@
 
 $(document).ready(function(){
 	
-	$('.data-table').dataTable({
-		"bJQueryUI": true,
-		"sPaginationType": "full_numbers",
-		"sDom": '<""l>t<"F"fp>'
-	});
+
 	
 	var checkboxClass = 'icheckbox_flat-blue';
 	var radioClass = 'iradio_flat-blue';

@@ -8,10 +8,11 @@
 
 <link href="${ctx}/static/ol/css/plugins/jquery.circliful.css"
 	rel="stylesheet">
-	<link href="${ctx}/static/ol/css/plugins/TimeCircles.css"
+<link href="${ctx}/static/ol/css/plugins/TimeCircles.css"
 	rel="stylesheet">
 <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css"
 	rel="stylesheet">
+<script src="${ctx}/static/unicorn/js/bootbox.min.js"></script>
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <style>
@@ -19,6 +20,35 @@
 	color: red;
 }
 </style>
+<script>
+$(document).ready(function(){
+
+setTimeout(a,"${sessionScope.warnTime}"); //2400秒后动作
+function a()
+{
+	var message="还有5分钟了，请注意时间!"
+	bootbox.alert(message);
+}
+});
+setTimeout(autosubmit,"${sessionScope.autosmtTime}");
+function autosubmit() {
+	var message="时间已到，系统已经自动帮您提交!"
+	alert(message);
+	$("#inputForm").submit();
+	
+}
+	function submitConfirm() {
+		var message = "确定提交试卷吗？";
+		bootbox.confirm(message, function(result) {
+			if (result) {
+				$("#inputForm").submit();
+			}
+		});
+	}
+	
+	
+	 
+</script>
 </head>
 <body>
 	<div id="wrapper">
@@ -59,25 +89,23 @@
 											</p>
 											<p>
 												D、${examinfo.choiceD}<br />
-											</p> 
-											<input type="radio" value="A" id="a_2" name="choice_<%=j%>" />&nbsp;<label
-											for="a_2">A</label>&nbsp;&nbsp; 
-											<input type="radio" value="B"
+											</p> <input type="radio" value="A" id="a_2" name="choice_<%=j%>" />&nbsp;<label
+											for="a_2">A</label>&nbsp;&nbsp; <input type="radio" value="B"
 											id="b_2" name="choice_<%=j%>" />&nbsp;<label for="b_2">B</label>&nbsp;&nbsp;
 											<input type="radio" value="C" id="c_2" name="choice_<%=j%>" />&nbsp;<label
-											for="c_2">C</label>&nbsp;&nbsp; 
-											<input type="radio" value="D"
+											for="c_2">C</label>&nbsp;&nbsp; <input type="radio" value="D"
 											id="d_2" name="choice_<%=j%>" />&nbsp;<label for="d_2">D</label>&nbsp;&nbsp;</li>
 										<input type="hidden" value="<%j++;%>" />
-										<input type="hidden" id="time" name="someTimer" value="" />
+										<!-- <input type="text" id="time" name="someTimer1" value="" /> -->
 									</c:forEach>
 								</ul>
 								<div align="center" class="form-actions">
-									<input id="submit_btn" class="btn btn-primary" type="submit"
-										value="交卷" />&nbsp; <input id="cancel_btn" class="btn"
+									<input id="btnSubmit" class="btn btn-primary" type="button" onclick="submitConfirm()"
+										value="交卷" />&nbsp; 
+									<input id="cancel_btn" class="btn"
 										type="button" value="取消" onclick="history.back()" />
 								</div>
-
+								 
 							</form>
 
 						</div>
@@ -87,28 +115,29 @@
 				<div class="col-lg-4">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<div class="someTimer" data-timer="2700"
-								style="width: 330px; margin: 0 auto;">
-							</div>
+							<div class="someTimer" data-timer="${sessionScope.diffs}"
+								style="width: 330px; margin: 0 auto;"></div>
 
-							<div style="text-align: center;">
+							<!-- 							<div style="text-align: center;">
 								<button class="start">开始</button>
 								<button class="stop">停止</button>
 								<button class="destroy">清除</button>
-							</div>
+							</div> -->
 							<ul class="list-group">
-							<i class="list-group-item"><h3 align="center"><b>剩余时间</b></h3> 
-							<script src="${ctx}/static/ol/css/plugins/jquery-1.7.2.min.js">	
-							</script> <script src="${ctx}/static/ol/css/plugins/TimeCircles.js"></script> <script>
+								<i class="list-group-item"><h3 align="center">
+										<b>剩余时间</b>
+									</h3> <script src="${ctx}/static/ol/css/plugins/jquery-1.7.2.min.js">	
+							</script> <script src="${ctx}/static/ol/css/plugins/TimeCircles.js"></script>
+									<script>
 										$(function() {
-											$("#time").val("$('data-timer').val()")
+										/* 	$("input[name=someTimer1]").val("${sessionScope.diffs}"); */
 											$('.someTimer').TimeCircles({
 												time : {
-													Days : {
+													  Days : {
 														show : true,
 														text : "天",
 														color : "#FC6"
-													},
+													},  
 													Hours : {
 														show : true,
 														text : "时",
@@ -148,17 +177,14 @@
 																.destroy();
 													});
 										});
-									</script>
-						
+									</script> </i>
+							</ul>
 
-						</i>
-						</ul>
-
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </body>
 </html>

@@ -32,7 +32,12 @@ color:red;
 					<div class="col-lg-8">
 						<div class="panel panel-default">
 							<div class="panel-heading">
+							<c:if test="${examTime>0}">
 								<h3><i class="exam">很抱歉，您的课程还没有学习完，暂时不能参加考试哦!</i></h3>
+							</c:if>
+								<c:if test="${examTime<=0}">
+								<h3><i class="exam">很抱歉，您的考试机会已经用完，不能参加考试哦!</i></h3>
+							    </c:if>
 							</div>
 						</div>
 					</div>

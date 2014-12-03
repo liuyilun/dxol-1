@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import dxol.entity.Student;
 import dxol.service.account.ShiroDbRealm.ShiroUser;
 import dxol.service.student.StudentService;
 
@@ -20,7 +21,8 @@ public class OlSuccessController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String success(Model model) {
 		ShiroUser student = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-		model.addAttribute("currentStudent", studentService.findStudentbyName(student.id));
+		Student loginStudent = studentService.findStudentbyName(student.id);
+		model.addAttribute("currentStudent", loginStudent);
 		return "/ol/view/index";
 	}
 }

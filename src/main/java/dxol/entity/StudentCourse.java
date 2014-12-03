@@ -6,34 +6,34 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @IdClass(StudentCourseId.class)
 @Table(name = "ol_student_course")
 public class StudentCourse implements Serializable {
-
-
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2873540752029162226L;
 	@Id
-	private Long student_id;
+	@Column(name="student_id")
+	private Long studentId;
 	@Id
-	private Long course_id;
+	@Column(name="course_id")
+	private Long courseId;
 	@Column(name="time")
-	private int time;
+	private int time = 0;
 	@Column(name="hour")
-	private int hour;
+	private int hour = 0;
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name = "student_id", referencedColumnName="id")
+	@JoinColumn(name = "student_id", referencedColumnName="id", updatable = false, insertable = false)
 	private Student student;
 
 	@ManyToOne
-	@PrimaryKeyJoinColumn(name = "course_id", referencedColumnName="id")
+	@JoinColumn(name = "course_id", referencedColumnName="id", updatable = false, insertable = false)
 	private Course course;
 
 	
@@ -70,21 +70,22 @@ public class StudentCourse implements Serializable {
 		this.hour = hour;
 	}
 
-	public Long getStudent_id() {
-		return student_id;
+	public Long getStudentId() {
+		return studentId;
 	}
 
-	public void setStudent_id(Long student_id) {
-		this.student_id = student_id;
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
 	}
 
-	public Long getCourse_id() {
-		return course_id;
+	public Long getCourseId() {
+		return courseId;
 	}
 
-	public void setCourse_id(Long course_id) {
-		this.course_id = course_id;
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
 	}
 
+	
 
 }

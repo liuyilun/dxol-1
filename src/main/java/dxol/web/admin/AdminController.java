@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import dxol.entity.Admin;
@@ -86,24 +87,17 @@ public class AdminController {
 		redirectAttributes.addFlashAttribute("message", "删除任务成功");
 		return "redirect:/admin/manager/";
 	}
-	/*
-	 * // 当点击修改时，跳转到修改页面
-	 * 
-	 * @RequestMapping(value = "update/{id}") public String updateForm(Model
-	 * model) { return "/admin/view/admins/adminForm"; }
-	 * //将更改后的页面进行保存，并重定向到/student,然后重新查询所有的学生，让他们显示在studentList.jsp页面
-	 * 
-	 * @RequestMapping(value = "save/{id}") public String
-	 * update(@ModelAttribute("admin") Admin admin, RedirectAttributes
-	 * redirectAttributes) { adminService.saveAdmin(admin);
-	 * redirectAttributes.addFlashAttribute("message",
-	 * "更新"+admin.getUsername()+"成功"); return "redirect:/manage/"; } /**
-	 * 使用@ModelAttribute, 实现Struts2
-	 * Preparable二次部分绑定的效果,先根据form的id从数据库查出Task对象,再把Form提交的内容绑定到该对象上。
-	 * 因为仅update()方法的form中有id属性，因此本方法在该方法中执行.
+	
+	/**
+	 * Ajax请求校验loginName是否唯一。
 	 */
-	/*
-	 * @ModelAttribute("admin") public Admin getAdminId(@PathVariable("id")Long
-	 * id){ return adminService.findAdminbyName(id); }
-	 */
+	@RequestMapping(value = "checkUserName")
+	@ResponseBody
+	public String checkLoginName(@RequestParam("username") String username) {
+		if (adminService.findAdminbyUserName(username) == null) {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
 }

@@ -5,21 +5,6 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <head>
 <script type="text/javascript">
-$(document).ready(function(){
-	$(".student_tab").addClass("active");
-	var message="${message}" /* getUrlParam("message") */;
-	if(message!= null){
-		bootbox.alert(message);
-	}
-})
-	function getUrlParam(name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-		var r = window.location.search.substr(1).match(reg); //匹配目标参数
-		if (r != null)
-			return decodeURIComponent(r[2]);
-		return null; //返回参数值
-	} 
-
 	function deleteConfirm(id, name) {
 		var message = "确认删除 <strong> " + name + "</strong> 吗？";
 		bootbox.confirm(message, function(result) {
@@ -27,17 +12,10 @@ $(document).ready(function(){
 				location.href = "${ctx}/admin/student/delete/" + id;
 			}
 		});
-		/*  	$("#alertMessage").html("确认删除 <strong> "+name+"</strong> 吗？");
-		    	$("#confirmButton").attr("href","${ctx}/informAdmin/delete/"+id);
-		        $('#myAlert').modal({
-		    		backdrop:true,
-		    		keyboard:true,
-		    		show:true
-				}); */
 	}
-	function success(message) {
+/* 	function success(message) {
 		bootbox.prompt(message);
-	}
+	} */
 	function detail(username,name,sex,role,registerDate,
 			schoolname,depart,altHour,reqHour,grade,examTime,
 			summaryfileName,summaryUpTime,identityName){
@@ -142,6 +120,7 @@ $(document).ready(function(){
 	} 
 	
 </script>
+
 </head>
 
 <body data-color="grey" class="flat">
@@ -157,17 +136,32 @@ $(document).ready(function(){
 			</div>
 			<div id="breadcrumb">
 				<a href="${ctx}/admin/success" title="Go to Home" class="tip-bottom"><i
-					class="fa fa-home"></i> Home</a> <a href="${ctx}/admin/student/create"
-					class="current"><button class="btn" type="button">添加学生</button></a>
+					class="fa fa-home"></i> Home</a> 
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-
+				<div class = "rol">
+					<form class="searchForm" action="#" role="form",method="get">
+						<div class="col-xs-3 form-group input-group" style="margin-bottom: -18px;">
+	                         <input type="text" class="form-control"  placeholder="姓名/学号/专业..."  name="searchPara" value="${param.searchPara}">
+	                         <span class="input-group-btn">
+	                             <button class="btn btn-default" data-original-title="搜索" type="submit"><i class="fa fa-search"></i>
+	                             </button>
+	                         </span>
+	                     </div>
+					</form>
+				
+					</div>
 					<div class="widget-box">
 						<div class="widget-title">
-							<span class="icon"> <i class="fa fa-th"></i>
+							<span class="icon">
+							<a class="tip-top" href="${ctx}/admin/student/create"  data-original-title = "添加学生" align="center">
+								<i class="fa fa-plus"></i>
+							</a> 
 							</span>
 							<h5>学生列表</h5>
+								
+								<tags:sort />
 						</div>
 						<div class="widget-content nopadding">
 							<table
@@ -178,68 +172,48 @@ $(document).ready(function(){
 										<!-- <th>密码</th> -->
 										<th style="width: 7%">姓名</th>
 										<th style="width: 5%">性别</th>
-										<th style="width: 7%">角色</th>
-										<th style="width: 15%">注册日期</th>
-										<!-- 	<th>选修课已修学时</th>
-										<th>必修课已修学时</th>
-										<th>是否可以考试</th> -->
 										<th style="width: 15%">学院</th>
-										<th style="width: 10%">专业</th>
-										<th style="width: 5%">成绩</th>
-										<!-- <th>剩余考试次数</th> -->
+										<th>专业</th>
+										<th style="width: 10%">身份</th>
+										<th style="width: 6%">成绩</th>
 										<th style="width: 7%">学习总结</th>
-										<!-- <th>学习总结上传（更新）时间</th> -->
-										<th style="width: 9%">身份</th>
-										<th style="width: 10%">操作</th>
+										<th style="width: 15%">注册日期</th>
+
+										<th style="width: 110px">操作</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${students}" var="student">
+									<c:forEach items="${students.content}" var="student">
 										<tr class="gradeX">
-											<td style="width: 10%">${student.username}</td>
-											<%-- <td>${student.password}</td> --%>
-											<td style="width: 7%">${student.name}</td>
-											<td style="width: 5%" align="center"><c:choose>
+											<td>${student.username}</td>
+											<td>${student.name}</td>
+											<td align="center"><c:choose>
 													<c:when test="${student.sex==0}">女</c:when>
 													<c:otherwise>男</c:otherwise>
 												</c:choose></td>
-											<td style="width: 7%" align="center"><c:choose>
-													<c:when test="${student.role=='student'}">学生</c:when>
-													<c:otherwise>管理员</c:otherwise>
-												</c:choose></td>
-
-											<td style="width: 15%">${student.registerDate}</td>
-											<%-- <td>${student.altHour}</td>
-											<td>${student.reqHour}</td>
-											<td>${student.isFinish}</td> --%>
-											<td style="width: 15%">${student.school.name}</td>
-											<td style="width: 10%">${student.depart}</td>
-											<td style="width: 5%" align="center"><c:if
-													test="${student.grade>=60}">
-													<a class="btn" title="恭喜，成绩合格！"><span
-														class="badge badge-success">${student.grade}</span></a>
+											<td>${student.school.name}</td>
+											<td>${student.depart}</td>
+											<td>${student.identity.identityName}</td>
+											<td align="center"><c:if test="${student.grade>=60}">
+													<span class="badge badge-success">${student.grade}</span>
 												</c:if> <c:if test="${student.grade>0&&student.grade<60}">
-													<a class="btn" title="很遗憾，成绩不合格！"><span
-														class="badge badge-danger">${student.grade}</span></a>
+													<span class="badge badge-danger">${student.grade}</span>
 												</c:if> <c:if test="${student.grade==0}">
-													<a class="btn" title="很遗憾，成绩不合格！"><span
-														class="badge badge-default">${student.grade}</span></a>
+													<span class="badge badge-inverse">${student.grade}</span>
 												</c:if></td>
 											<%-- <td>${student.examTime}</td> --%>
 
-											<td style="width: 7%" class="taskOptions"><c:if
+											<td class="taskOptions"><c:if
 													test="${student.summary.fileName!=null&&student.summary.path!=null}">
 													<a
 														href="${ctx}/background/fileOperate/download/${student.id}"
 														class="tip-top" data-original-title="下载学习总结"> <i
 														class="fa fa-download"></i></a>
 												</c:if> <c:if
-													test="${student.summary.fileName==null||student.summary.path==null}">还未上传
+													test="${student.summary.fileName==null||student.summary.path==null}">未上传
 											</c:if></td>
-											<%-- <td>${student.summaryUpTime}</td> --%>
-											<td style="width: 9%">${student.identity.identityName}</td>
-											<%-- <td style="width: 60%">${inform.title }</td>
-											<td align="center">${inform.updateTime }</td> --%>
+											<td>${student.registerDate}</td>
+
 											<td class="taskOptions"><a class="tip-top"
 												data-original-title="详情" id="bootbox-custom-html-forms"
 												onclick="detail('${student.username}','${student.name}',${student.sex},'${student.role}','${student.registerDate}','${student.school.name}','${student.depart}',${student.altHour},${student.reqHour},${student.grade},${student.examTime},'${student.summary.fileName}','${student.summaryUpTime}','${student.identity.identityName}')">
@@ -255,11 +229,28 @@ $(document).ready(function(){
 									</c:forEach>
 								</tbody>
 							</table>
+						
+							<div class="row" style="margin-top:-18px;  margin-bottom: -23px;">
+								<label style="padding-top: 23px;padding-left: 10px;"> 共${students.totalElements }条数据</label>
+									<tags:pagination page="${students}" paginationSize="5" />
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	
+		$(document).ready(function(){
+			$(".student_tab").addClass("active");
+			var message="${message}" /* getUrlParam("message") */;
+			if(message!= null&&message!=""){
+				bootbox.alert(message);
+			}
+			
+			
+		});
+	</script>
 </body>
 </html>

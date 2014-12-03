@@ -2,28 +2,27 @@ package dxol.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.google.common.collect.Lists;
+import org.assertj.core.util.Lists;
 
 @Entity
 @Table(name = "ol_course")
 public class Course extends IdEntityBase {
+	
+	
 	private Identity identity;
 	private String courseName;
-	private int hour;
+	private int hour = 0;
 	private int reqAlt;
 	private String content;
 
+	private List<StudentCourse> students;
 
-	
-
-	private List<StudentCourse> students=Lists.newArrayList();;
 	@OneToMany(mappedBy = "course")
 	public List<StudentCourse> getStudents() {
 		return students;
@@ -75,4 +74,21 @@ public class Course extends IdEntityBase {
 		this.reqAlt = reqAlt;
 	}
 
+	
+	public void addStudent(Student student){
+			StudentCourse studentcourse = new StudentCourse();
+			
+			if(this.students == null){
+				students = Lists.newArrayList();
+			}
+			studentcourse.setStudent(student);
+			studentcourse.setCourse(this);
+			
+			studentcourse.setCourseId(this.getId());
+			studentcourse.setStudentId(student.getId());
+			
+			this.students.add(studentcourse);
+		}
+		
 }
+

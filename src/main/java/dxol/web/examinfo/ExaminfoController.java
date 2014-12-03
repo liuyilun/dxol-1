@@ -2,6 +2,7 @@ package dxol.web.examinfo;
 
 
 import java.util.Map;
+
 import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springside.modules.web.Servlets;
+
 import com.google.common.collect.Maps;
 
 import dxol.entity.ExamInfo;
@@ -95,7 +97,7 @@ public class ExaminfoController {
 	public String update(@Valid @ModelAttribute("examinfo") ExamInfo examinfo, 
 			RedirectAttributes redirectAttributes,Long identity_id ) {
 		Identity identity = identityDao.findOne(identity_id);
-		examinfo.setIdentity(identity);;
+		examinfo.setIdentity(identity);
 		examinfoService.saveExaminfo(examinfo);
 		redirectAttributes.addFlashAttribute("message", "更新试题成功");
 		return "redirect:/admin/examinfo";

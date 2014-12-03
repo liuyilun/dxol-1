@@ -51,8 +51,7 @@ public class FileOperateUtil {
 	 */
 	private static String rename(String name) {
 
-		Long now = Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss")
-				.format(new Date()));
+		Long now = Long.parseLong(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 		Long random = (long) (Math.random() * now);
 		String fileName = now + "" + random;
 
@@ -92,8 +91,8 @@ public class FileOperateUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static List<Map<String, Object>> upload(HttpServletRequest request,
-			String[] params, Map<String, Object[]> values) throws Exception {
+	public static List<Map<String, Object>> upload(HttpServletRequest request, String[] params,
+			Map<String, Object[]> values) throws Exception {
 
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		// 上传文件处理器
@@ -101,11 +100,7 @@ public class FileOperateUtil {
 		// 文件列表
 		Map<String, MultipartFile> fileMap = mRequest.getFileMap();
 		// 获取服务器上传文件夹地址
-		String uploadDir = request.getSession().getServletContext()
-				.getRealPath("/")
-				+ FileOperateUtil.UPLOADDIR;
-		System.out.println("~~~~~~~"
-				+ request.getSession().getServletContext().getRealPath("/"));
+		String uploadDir = request.getSession().getServletContext().getRealPath("/") + FileOperateUtil.UPLOADDIR;
 		// 创建文件夹
 		File file = new File(uploadDir);
 
@@ -115,8 +110,7 @@ public class FileOperateUtil {
 
 		String fileName = null;
 		int i = 0;
-		for (Iterator<Map.Entry<String, MultipartFile>> it = fileMap.entrySet()
-				.iterator(); it.hasNext(); i++) {
+		for (Iterator<Map.Entry<String, MultipartFile>> it = fileMap.entrySet().iterator(); it.hasNext(); i++) {
 
 			Map.Entry<String, MultipartFile> entry = it.next();
 			// 单个文件
@@ -131,14 +125,13 @@ public class FileOperateUtil {
 			String zipName = zipName(noZipName);
 
 			// 上传成为压缩文件
-			ZipOutputStream outputStream = new ZipOutputStream(
-					new BufferedOutputStream(new FileOutputStream(zipName)));
+			ZipOutputStream outputStream = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(zipName)));
 			outputStream.putNextEntry(new ZipEntry(fileName));
-			outputStream.setEncoding("GBK");
+			outputStream.setEncoding("UTF-8");
 
 			FileCopyUtils.copy(mFile.getInputStream(), outputStream);
 
-			Map<String, Object> map = new HashMap<String, Object>(); 
+			Map<String, Object> map = new HashMap<String, Object>();
 			// 固定参数值对
 			map.put(FileOperateUtil.REALNAME, zipName(fileName));
 			map.put(FileOperateUtil.STORENAME, zipName(storeName));
@@ -146,11 +139,6 @@ public class FileOperateUtil {
 			map.put(FileOperateUtil.SUFFIX, "zip");
 			map.put(FileOperateUtil.CONTENTTYPE, "application/octet-stream");
 			map.put(FileOperateUtil.CREATETIME, new Date());
-
-			// 自定义参数值对
-			for (String param : params) {
-				map.put(param, values.get(param)[i]);
-			}
 
 			result.add(map);
 		}
@@ -169,17 +157,14 @@ public class FileOperateUtil {
 	 * @param realName
 	 * @throws Exception
 	 */
-	public static void download(HttpServletRequest request,
-			HttpServletResponse response, String storeName, String contentType,
-			String realName) throws Exception {
+	public static void download(HttpServletRequest request, HttpServletResponse response, String storeName,
+			String contentType, String realName) throws Exception {
 		response.setContentType("text/html;charset=UTF-8"); // 设置相应类型和编码
 		request.setCharacterEncoding("UTF-8");
 		BufferedInputStream bis = null; // 从文件中读取内容
 		BufferedOutputStream bos = null; // 向文件中写入内容
 		// 先获得输入流，来读取网络服务器中的一个文件，然后用输出流写到本地的一个文件中
-		String ctxPath = request.getSession().getServletContext()
-				.getRealPath("/")
-				+ FileOperateUtil.UPLOADDIR; // 获得服务器上存放下载资源的地址
+		String ctxPath = request.getSession().getServletContext().getRealPath("/") + FileOperateUtil.UPLOADDIR; // 获得服务器上存放下载资源的地址
 		String downLoadPath = ctxPath + storeName; // 获得下载文件全路径
 		// 获得文件大小
 		long fileLength = new File(downLoadPath).length();

@@ -46,7 +46,8 @@ public class AdminUpdateController {
 	@RequestMapping(value = "save/{id}")
 	public String update(@ModelAttribute("admin") Admin admin,
 			RedirectAttributes redirectAttributes,
-			@RequestParam(value = "school_id") Long schoolId) {
+			@RequestParam(value = "school_id") Long schoolId,String username1) {
+		admin.setUsername(username1);
 		School school=new School();
 		school.setId(schoolId);
 		admin.setSchool(school);

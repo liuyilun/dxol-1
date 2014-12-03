@@ -55,15 +55,17 @@ $(document).ready(function(){
 			</div>
 			<div id="breadcrumb">
 				<a href="${ctx}/admin/success" title="Go to Home" class="tip-bottom"><i
-					class="fa fa-home"></i> Home</a> <a href="${ctx}/admin/manager/create"
-					class="current"><button class="btn" type="button">添加管理员</button></a>
+					class="fa fa-home"></i> Home</a> 
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
 
 					<div class="widget-box">
 						<div class="widget-title">
-							<span class="icon"> <i class="fa fa-th"></i>
+							<span class="icon">
+							<a class="tip-top" href="${ctx}/admin/manager/create" data-original-title = "添加学生" align="center">
+								<i class="fa fa-plus"></i>
+							</a> 
 							</span>
 							<h5>管理员列表</h5>
 						</div>
@@ -117,5 +119,28 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
+	<script>
+$('.data-table').dataTable({
+	"bJQueryUI": true,
+	"sPaginationType": "full_numbers",
+	"sDom": '<""l>t<"F"fp>',
+	"oLanguage": {
+	           "sProcessing": "正在加载中......",
+	           "sLengthMenu": "每页显示 _MENU_ 条记录",
+	           "sZeroRecords": "对不起，查询不到相关数据！",
+	           "sEmptyTable": "表中无数据存在！",
+	           "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+	           "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+	           "sSearch": "搜索:",
+	           "oPaginate": {
+	               "sFirst": "首页",
+	               "sPrevious": "上一页",
+	               "sNext": "下一页",
+	               "sLast": "末页"
+	                }
+	            } 
+	});	
+</script>
 </body>
+
 </html>

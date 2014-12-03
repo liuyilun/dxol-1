@@ -66,5 +66,10 @@ public class AdminService {
 				salt, HASH_INTERATIONS);
 		user.setPassword(Encodes.encodeHex(hashPassword));
 	}
+
+	public Admin findAdminbyUserName(String username) {
+		// TODO Auto-generated method stub
+		return adminDao.findByUsername(username);
+	}
 	
 }

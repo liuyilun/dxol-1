@@ -6,7 +6,4 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import dxol.entity.Identity;
 
 public interface IdentityDao extends PagingAndSortingRepository<Identity, Long>, JpaSpecificationExecutor<Identity> {
-
-	
-
 }
