@@ -21,7 +21,20 @@ public class ExamInfo extends IdEntityBase {
 
 	private String choiceD;
 	private String rightAnswer;
+	private Course course;
 	
+	@ManyToOne
+	@JoinColumn(name="course_id")
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+
+
 	@ManyToOne
 	@JoinColumn(name = "identity_id")
 	public Identity getIdentity() {
