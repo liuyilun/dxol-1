@@ -12,6 +12,7 @@
 		
 		<script type="text/javascript">
 		$(document).ready(function(){
+		$(".exams_tab").addClass("active");
 			$('#infoContent').wysihtml5({
 				"link": false, //Button to insert a link. Default true
 				"image": false, //Button to insert an image. Default true,
@@ -24,7 +25,7 @@
 		{
 		with (field)
 		  {
-		  if (value==null||value==""||value==0)
+		  if (value==null||value==" "||value==0)
 		    {alert(alerttxt);return false}
 		  else {return true}
 		  }
@@ -47,7 +48,7 @@
 		  if (validate_required(choiceD,"选项D不能为空！")==false)
 		    {choiceD.focus();return false}
 		  if (validate_required(rightAnswer,"正确选项不能为空！")==false)
-		    {rightAnswer.focus();return false}
+		    {return false}
 		  
 		  }
 		}
@@ -120,8 +121,15 @@
 										</div>
 										<label class="col-sm-3 col-md-3 col-lg-2 control-label">正确选项：</label>
 										<div class="col-sm-9 col-md-9 col-lg-10">
-											<input type="text" class="form-control input-sm" name="rightAnswer" id="rightAnswer" value="${examinfo.rightAnswer }"/>
-										</div>
+										 <input type="radio" class="form-control input-sm" name="rightAnswer" id="rightAnswer" value="A" 
+										 <c:if test="${examinfo.rightAnswer=='A'}"> checked="checked"</c:if> />选项A
+                                         <input type="radio" class="form-control input-sm" name="rightAnswer" id="rightAnswer" value="B"
+                                         <c:if test="${examinfo.rightAnswer=='B'}"> checked="checked"</c:if>/>选项B
+                                         <input type="radio" class="form-control input-sm" name="rightAnswer" id="rightAnswer" value="C"
+                                         <c:if test="${examinfo.rightAnswer=='C'}"> checked="checked"</c:if>/>选项C
+                                         <input type="radio" class="form-control input-sm" name="rightAnswer" id="rightAnswer" value="D"
+                                         <c:if test="${examinfo.rightAnswer=='D'}"> checked="checked"</c:if>/>选项D
+                                       	</div>
 									</div>
 									
 

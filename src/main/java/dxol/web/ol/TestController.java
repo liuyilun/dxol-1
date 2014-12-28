@@ -32,6 +32,7 @@ public class TestController {
 	private StudentService studentService;
 	private final static int QUESTION_NUMBER=50;
 	private Clock clock = Clock.DEFAULT;
+	//随机出题
 	@RequestMapping(value = "")
 	public String list(Model model, HttpSession session) {
 		ShiroUser student = (ShiroUser) SecurityUtils.getSubject()
@@ -51,7 +52,7 @@ public class TestController {
 		for (ExamInfo examInfo : examInfos) {
 
 			if (examInfo.getIdentity().getId() == currentStudent.getIdentity()
-					.getId() && i < QUESTION_NUMBER) {
+					.getId() && i < QUESTION_NUMBER&&examInfo.getCourse()==null) {
 				System.out.println(examInfo.getId());
 				list.add(examInfo);
 				i++;
@@ -71,16 +72,16 @@ public class TestController {
 	    //毫秒ms
 		long diff=(Long)session.getAttribute("refreshcurrentTime")-(Long) session.getAttribute("currentTime");
 	    long diffs=diff/1000%60+60*(diff/(60*1000)%60); 
-	    session.setAttribute("diffs", 2700-diffs);
-	    session.setAttribute("warnTime", 2400000-diffs*1000);
-	    session.setAttribute("autosmtTime", 2700000-diffs*1000);
+	    session.setAttribute("diffs", 2700-diffs);//考试时间
+	    session.setAttribute("warnTime", 2400000-diffs*1000);//考试剩5分钟提醒
+	    session.setAttribute("autosmtTime", 2700000-diffs*1000);//自动提交时间
 		if (currentStudent.getIsFinish() == 2&&currentStudent.getExamTime()>0)
 			return "/ol/view/exam/startexam";
 		model.addAttribute("examTime", currentStudent.getExamTime());
 		return "/ol/view/exam/test";
 		
 	}
-
+	//批改试卷
 	@RequestMapping(value = "check")
 	public String check(Model model, HttpSession session,
 			RedirectAttributes redirectAttributes, HttpServletRequest request) {

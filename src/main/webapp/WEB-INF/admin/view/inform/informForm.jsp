@@ -12,6 +12,7 @@
 		
 		<script type="text/javascript">
 		$(document).ready(function(){
+			$(".inform_tab").addClass("active");
 			$('#infoContent').wysihtml5({
 				"link": false, //Button to insert a link. Default true
 				"image": false, //Button to insert an image. Default true,
@@ -24,9 +25,11 @@
 	<body >
 	
 			<div id="content">
+				<div id="content-header">
+					<h1>添加通知</h1>
+				</div>
 				<div id="breadcrumb">
-					<a href="#" title="Go to Home" class="tip-bottom"><i class="fa fa-home"></i> Home</a>
-					<a href="#" class="current">Dashboard</a>
+					<a href="#"><i class="fa fa-info-circle"></i> 通知管理</a> 
 				</div>
 
 				<div class="container-fluid">

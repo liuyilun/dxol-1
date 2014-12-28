@@ -21,8 +21,8 @@
     </div>
     <div id="sidebar">
 		<ul>
-			<li><a href="${ctx}/inform"><i class="fa fa-th-list"></i> <span>通知</span></a></li>
-			<li><a href="${ctx}/help"><i class="fa fa-th-list"></i> <span>使用帮助</span></a></li>
+			<li class="info_tab"><a href="${ctx}/inform"><i class="fa fa-info-circle"></i> <span>通知</span></a></li>
+			<li class="help_tab"><a href="${ctx}/help"><i class="fa fa-question-circle"></i> <span>使用帮助</span></a></li>
 		</ul>
 	</div>
     

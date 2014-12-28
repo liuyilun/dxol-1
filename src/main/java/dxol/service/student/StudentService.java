@@ -74,18 +74,23 @@ public class StudentService {
 		if (StringUtils.isNotBlank(student.getPlainPassword())) {
 			entryptPassword(student);
 		}
-		student.setRegisterDate(clock.getCurrentDate());
-
+		boolean isNewStudent = false;
+		if (student.getId() == null) {
+			student.setRegisterDate(clock.getCurrentDate());
+			isNewStudent = true;
+		}
 		studentDao.save(student);
 
-		List<Course> courses = courseService.getCourseByIdentityId(student.getIdentity().getId());
-		
-		for (Course course : courses) {
-			student.addCourse(course);
-		}
-		
-		studentCourseService.saveStudentCourse(student.getCourses());
+		if (isNewStudent) {
 
+			List<Course> courses = courseService.getCourseByIdentityId(student
+					.getIdentity().getId());
+
+			for (Course course : courses) {
+				student.addCourse(course);
+			}
+			studentCourseService.saveStudentCourse(student.getCourses());
+		}
 	}
 
 	public void updateStudent(Student student) {
@@ -103,11 +108,14 @@ public class StudentService {
 	}
 
 	public List<Student> findAllStudent() {
-		return (List<Student>) studentDao.findAll(new Sort(Direction.ASC, "id"));
+		return (List<Student>) studentDao
+				.findAll(new Sort(Direction.ASC, "id"));
 	}
 
-	public Page<Student> getStudent(String searchPara, int pageNumber, int pageSize, String sortType) {
-		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
+	public Page<Student> getStudent(String searchPara, int pageNumber,
+			int pageSize, String sortType) {
+		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize,
+				sortType);
 		if (SecurityUtils.getSubject().hasRole("super")) {
 			if (StringUtils.isNoneBlank(searchPara)) {
 				return studentDao.findBySearchPara(searchPara, pageRequest);
@@ -116,9 +124,11 @@ public class StudentService {
 			}
 		} else {
 			if (StringUtils.isNoneBlank(searchPara)) {
-				return studentDao.findBySearchParaAndSchool(searchPara, getCurrentUserschool(), pageRequest);
+				return studentDao.findBySearchParaAndSchool(searchPara,
+						getCurrentUserschool(), pageRequest);
 			} else {
-				return studentDao.findbySchoolId(getCurrentUserschool(), pageRequest);
+				return studentDao.findbySchoolId(getCurrentUserschool(),
+						pageRequest);
 			}
 		}
 	}
@@ -132,7 +142,8 @@ public class StudentService {
 	/**
 	 * 创建分页请求.
 	 */
-	private PageRequest buildPageRequest(int pageNumber, int pagzSize, String sortType) {
+	private PageRequest buildPageRequest(int pageNumber, int pagzSize,
+			String sortType) {
 		Sort sort = null;
 		if ("auto".equals(sortType)) {
 			sort = new Sort(Direction.DESC, "id");
@@ -151,7 +162,8 @@ public class StudentService {
 		byte[] salt = Digests.generateSalt(SALT_SIZE);
 		user.setSalt(Encodes.encodeHex(salt));
 
-		byte[] hashPassword = Digests.sha1(user.getPlainPassword().getBytes(), salt, HASH_INTERATIONS);
+		byte[] hashPassword = Digests.sha1(user.getPlainPassword().getBytes(),
+				salt, HASH_INTERATIONS);
 		user.setPassword(Encodes.encodeHex(hashPassword));
 	}
 
@@ -159,11 +171,10 @@ public class StudentService {
 		// TODO Auto-generated method stub
 		return studentDao.findByUsername(username);
 	}
+
 	public List<Long> getStudentByIdentityId(Long id) {
 		// TODO Auto-generated method stub
 		return studentDao.findbyIdentityId(id);
 	}
-
-
 
 }

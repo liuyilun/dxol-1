@@ -16,5 +16,6 @@
 	<decorator name="inform/layouts/default" page="/WEB-INF/inform/layouts/default.jsp" >
 		<pattern>/inform/*</pattern>
 		<pattern>/inform</pattern>
+		<pattern>/help</pattern>
 	</decorator>
 </decorators>

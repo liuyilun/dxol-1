@@ -5,6 +5,7 @@
  *******************************************************************************/
 package dxol.web.account;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +26,16 @@ public class LoginController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String login() {
+		if (SecurityUtils.getSubject().isAuthenticated()) {
+			return "redirect:/";
+		}
 		return "login";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String fail(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String userName, Model model) {
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, userName);
-		System.out.println("fail==========");
+		model.addAttribute("error", "error");
 		return "login";
 	}
 

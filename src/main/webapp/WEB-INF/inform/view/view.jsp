@@ -5,6 +5,11 @@
 <html>
 <head>
 <title>通知</title>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".info_tab").addClass("active");
+});
+</script>
 </head>
 <body data-color="grey" class="flat">
 	<div id="wrapper">

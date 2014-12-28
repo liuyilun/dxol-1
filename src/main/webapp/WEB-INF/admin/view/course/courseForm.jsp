@@ -12,6 +12,7 @@
 		
 		<script type="text/javascript">
 		$(document).ready(function(){
+		$(".course_tab").addClass("active");
 			$('#infoContent').wysihtml5({
 				"link": false, //Button to insert a link. Default true
 				"image": false, //Button to insert an image. Default true,
@@ -74,7 +75,7 @@
 										<div class="col-sm-9 col-md-9 col-lg-10">
 											<input type="text" class="form-control input-sm" name="courseName" id="courseName" value="${course.courseName }"/>
 										</div>
-										<label class="col-sm-3 col-md-3 col-lg-2 control-label">课程时间：</label>
+										<label class="col-sm-3 col-md-3 col-lg-2 control-label">课程学时：</label>
 										<div class="col-sm-9 col-md-9 col-lg-10">
 											<input type="text" class="form-control input-sm" name="hour" id="hour" value="${course.hour }"/>
 										</div>

@@ -6,7 +6,6 @@
 package dxol.service.account;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import dxol.entity.Student;
 import dxol.entity.User;
 import dxol.repository.AdminDao;
 import dxol.repository.StudentDao;
-import dxol.service.account.ShiroDbRealm.ShiroUser;
 
 /**
  * 用户管理类.
@@ -87,21 +85,6 @@ public class AccountService {
 	// }
 
 	/**
-	 * 判断是否超级管理员.
-	 */
-	private boolean isSupervisor(Long id) {
-		return id == 1;
-	}
-
-	/**
-	 * 取出Shiro中的当前用户LoginName.
-	 */
-	private String getCurrentUserName() {
-		ShiroUser user = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
-		return user.username;
-	}
-
-	/**
 	 * 设定安全的密码，生成随机的salt并经过1024次 sha-1 hash
 	 */
 	private void entryptPassword(User user) {
@@ -144,5 +127,10 @@ public class AccountService {
 
 	public void updateAdmin(User user) {
 		updateUser(user, ADMIN_METHOD);
+	}
+
+	public void updateStudent(Student student) {
+
+		updateUser(student, STUDENT_METHOD);
 	}
 }

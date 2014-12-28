@@ -16,73 +16,30 @@
                         <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-tasks">
+                        <c:forEach items="${currentStudent.courses}" var="studentCourse" begin="0" end="3" >
+                        <c:if test="${studentCourse!=null }"></c:if>
                         <li>
+                        	<c:set var="per" value="${studentCourse.time/(studentCourse.course.hour*60) }"/>
+                        	
                             <a href="#">
                                 <div>
                                     <p>
-                                        <strong>Task 1</strong>
-                                        <span class="pull-right text-muted">40% Complete</span>
+                                        <strong>${studentCourse.course.courseName }</strong>
+                                        <span class="pull-right text-muted">已完成 <fmt:formatNumber value="${per}" type="percent"/> </span>
                                     </p>
                                     <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                            <span class="sr-only">40% Complete (success)</span>
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="${per*100}" aria-valuemin="0" aria-valuemax="100" style="width:  ${per*100}%">
+                                            <span class="sr-only">${per*100}% Complete</span>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         </li>
                         <li class="divider"></li>
+                        </c:forEach>
                         <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 2</strong>
-                                        <span class="pull-right text-muted">20% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                            <span class="sr-only">20% Complete</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 3</strong>
-                                        <span class="pull-right text-muted">60% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                            <span class="sr-only">60% Complete (warning)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 4</strong>
-                                        <span class="pull-right text-muted">80% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                            <span class="sr-only">80% Complete (danger)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Tasks</strong>
+                            <a class="text-center" href="${ctx}/ol/studycourse">
+                                <strong>查看所有课程</strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         </li>
@@ -95,13 +52,11 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i>个人信息</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i>设置</a>
+                     <ul class="dropdown-menu dropdown-user">
+                        <li><a href="${ctx}/ol/profile"><i class="fa fa-gear fa-fw"></i>密码修改</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i>安全退出</a>
+                        <li><a href="${ctx}/logout"><i class="fa fa-sign-out fa-fw"></i>安全退出</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -114,26 +69,15 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a class="active" href="index.html"><i class="fa fa-dashboard fa-fw"></i> 在线学习</a>
+                            <a href="${ctx }/"><i class="fa fa-table fa-fw"></i> 首页</a>
+                        </li>
+                        <li>
+                            <a href="${ctx}/ol/studycourse"><i class="fa fa-dashboard fa-fw"></i> 在线学习</a>
                         </li>
                         <li>
                             <a href="${ctx}/ol/test"><i class="fa fa-table fa-fw"></i> 在线考试</a>
                         </li>
-                        <li>
-                            <a href=""><i class="fa fa-table fa-fw"></i> 学习总结</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Flot Charts</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">Morris.js Charts</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+                      
                       
                        
                     </ul>

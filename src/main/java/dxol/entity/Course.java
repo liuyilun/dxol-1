@@ -2,7 +2,9 @@ package dxol.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -22,6 +24,17 @@ public class Course extends IdEntityBase {
 	private String content;
 
 	private List<StudentCourse> students;
+	private List<ExamInfo> examinfos=Lists.newArrayList();
+
+	@OneToMany(cascade={CascadeType.ALL}, fetch =FetchType.EAGER,   
+            targetEntity = ExamInfo.class,mappedBy="course")
+	public List<ExamInfo> getExaminfos() {
+		return examinfos;
+	}
+
+	public void setExaminfos(List<ExamInfo> examinfos) {
+		this.examinfos = examinfos;
+	}
 
 	@OneToMany(mappedBy = "course")
 	public List<StudentCourse> getStudents() {

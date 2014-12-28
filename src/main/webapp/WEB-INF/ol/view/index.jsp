@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
+<c:set var="currentStudent" value="${sessionScope.currentStudent}" />
 <!DOCTYPE html>
 <html >
 
@@ -23,13 +24,12 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">首页</h1>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
             
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="panel panel-default">
+                    <div class="panel panel-info">
                         <div class="panel-heading">
                             <i class="fa fa-pie-chart fa-fw"></i> 已学课时统计
                         </div>
@@ -86,7 +86,7 @@
                 </div>
                 <!-- /.col-lg-8 -->
                 <div class="col-lg-4">
-                    <div class="panel panel-default">
+                    <div class="panel panel-info ">
                         <div class="panel-heading">
                             <i class="fa fa-user fa-fw"></i> 个人信息
                         </div>

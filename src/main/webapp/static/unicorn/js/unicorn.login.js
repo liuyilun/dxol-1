@@ -18,7 +18,7 @@ $(document).ready(function(){
 
     var loc = window.location + '';
     var ee = loc.split('#');
-    if(ee[1] == undefined){
+    if(ee[1] == undefined||(ee[1]!='inform'&&ee[1]!='adminform')){
     	loginbox.css({'height':'210px'});
         $('#inform, #adminform').css({'z-index':'100','opacity':'0.01'});
         $('#loginform').css({'z-index':'200','opacity':'1','display':'block'});
@@ -42,6 +42,33 @@ $(document).ready(function(){
     $('.flip-link.to-admin').click(function(){
         switch_container(admin,login_inform,210);
     });
+    $("#loginform").validate({
+        rules: {
+          username: "required",// simple rule, converted to {required:true}
+          password: "required",// compound rule
+        },
+		messages:{
+			username:"",
+			password:"",
+		},
+        invalidHandler: function() {
+            $("#loginbox").effect('shake');
+        },
+      
+      });
+    $("#adminform").validate({
+        rules: {
+          username: "required",// simple rule, converted to {required:true}
+          password: "required",// compound rule
+        },
+		messages:{
+			username:"",
+			password:"",
+		},
+        invalidHandler: function() {
+            $("#loginbox").effect('shake');
+        }
+      });
     /*
     $('#loginform').submit(function(e){
         var thisForm = $(this); 

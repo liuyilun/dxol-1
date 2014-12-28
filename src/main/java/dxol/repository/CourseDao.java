@@ -20,5 +20,6 @@ public interface CourseDao extends PagingAndSortingRepository<Course, Long>, Jpa
 	
 	@Query("select course.id,course.courseName,course.content from Course course where course.id=?")
 	Object[][] findById(Long id);
-
+	@Query("select course from Course course where course.id=?")
+	Course findbyCourseId(Long id);
 }

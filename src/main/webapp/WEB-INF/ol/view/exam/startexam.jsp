@@ -6,15 +6,9 @@
 <head>
 <title>在线考试</title>
 
-<link href="${ctx}/static/ol/css/plugins/jquery.circliful.css"
-	rel="stylesheet">
 <link href="${ctx}/static/ol/css/plugins/TimeCircles.css"
 	rel="stylesheet">
-<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css"
-	rel="stylesheet">
 <script src="${ctx}/static/unicorn/js/bootbox.min.js"></script>
-<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-<script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <style>
 .red {
 	color: red;
@@ -51,12 +45,11 @@ function autosubmit() {
 </script>
 </head>
 <body>
-	<div id="wrapper">
+	<div class="container" id="wrapper">
 		<div id="page-wrapper">
 			<div class="row">
-				<div class="col-lg-12">
-					<h1 class="page-header">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在线考试</h1>
+				<div class="col-lg-12" style="text-align: center;">
+					<h1 class="page-header">在线考试</h1>
 				</div>
 			</div>
 			<!-- /.col-lg-12 -->
@@ -65,7 +58,7 @@ function autosubmit() {
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4>
-								<i class="red">请在规定时间内完成以下试题</i>
+								<strong class="red">请在规定时间内完成以下试题</strong>
 							</h4>
 							<form id="inputForm" action="${ctx}/ol/test/check" method="post"
 								class="form-horizontal">
@@ -112,79 +105,62 @@ function autosubmit() {
 					</div>
 				</div>
 
-				<div class="col-lg-4">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<div class="someTimer" data-timer="${sessionScope.diffs}"
-								style="width: 330px; margin: 0 auto;"></div>
-
-							<!-- 							<div style="text-align: center;">
-								<button class="start">开始</button>
-								<button class="stop">停止</button>
-								<button class="destroy">清除</button>
-							</div> -->
-							<ul class="list-group">
-								<i class="list-group-item"><h3 align="center">
-										<b>剩余时间</b>
-									</h3> <script src="${ctx}/static/ol/css/plugins/jquery-1.7.2.min.js">	
-							</script> <script src="${ctx}/static/ol/css/plugins/TimeCircles.js"></script>
-									<script>
-										$(function() {
-										/* 	$("input[name=someTimer1]").val("${sessionScope.diffs}"); */
-											$('.someTimer').TimeCircles({
-												time : {
-													  Days : {
-														show : true,
-														text : "天",
-														color : "#FC6"
-													},  
-													Hours : {
-														show : true,
-														text : "时",
-														color : "#9CF"
-													},
-													Minutes : {
-														show : true,
-														text : "分",
-														color : "#BFB"
-													},
-													Seconds : {
-														show : true,
-														text : "秒",
-														color : "#F99"
-													}
-												}
-											});
-
-											$('.stop').click(
-													function() {
-														$('.someTimer')
-																.TimeCircles()
-																.stop();
-													});
-
-											$('.start').click(
-													function() {
-														$('.someTimer')
-																.TimeCircles()
-																.start();
-													});
-
-											$('.destroy').click(
-													function() {
-														$('.someTimer')
-																.TimeCircles()
-																.destroy();
-													});
-										});
-									</script> </i>
-							</ul>
-
-						</div>
+			
+               <section class="container">
+               <div class="pinned">
+				 <div class="col-lg-4">
+				  	
+					<div class="panel panel-success"  >
+						<div class="panel-heading"><i class="fa fa-pie-chart fa-fw"></i>剩余时间</div>
+							<div id="someTimer"  data-timer="${sessionScope.diffs}" style="width: 330px; margin: 0 auto;">
+							</div>
 					</div>
+			   </div>
 				</div>
+			 </section>
 			</div>
 		</div>
 	</div>
+	
+<script src="${ctx}/static/ol/css/plugins/TimeCircles.js"></script>
+<script src="${ctx}/static/ol/js/jquery.pin.min.js"></script>
+<script src="${ctx}/static/ol/js/jquery.pin.js"></script>
+<script>
+$(function() {
+	$('.pinned').pin({
+		containerSelector: ".container",
+			minWidth: 940
+	});
+	$('#someTimer').TimeCircles({
+		"animation": "smooth",
+	    "bg_width": 0.2,
+	    "fg_width": 0.023333333333333334,
+	    "circle_bg_color": "#90989F",
+	    "time": {
+	        "Days": {
+	            "text": "Days",
+	            "color": "#40484F",
+	            "show": false
+	        },
+	        "Hours": {
+	            "text": "时",
+	            "color": "#40484F",
+	            "show": true
+	        },
+	        "Minutes": {
+	            "text": "分",
+	            "color": "#40484F",
+	            "show": true
+	        },
+	        "Seconds": {
+	            "text": "秒",
+	            "color": "#40484F",
+	            "show": true
+	        }
+	    }
+	});
+});
+		
+</script> 
 </body>
 </html>

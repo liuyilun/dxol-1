@@ -83,4 +83,7 @@ public class ExaminfoService  {
 
 		return examinfoDao.findbyIdentityId();
 	}
+	public List<ExamInfo> getCourseExaminfo(Long id) {
+		return (List<ExamInfo>) examinfoDao.findbyCourseId(id);
+	}
 }

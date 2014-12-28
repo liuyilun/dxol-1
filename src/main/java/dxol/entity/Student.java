@@ -153,4 +153,42 @@ public class Student extends User {
 		course.getStudents().add(newStudentCourse);
 	}
 
+
+	public Course getCourseById(Long id) {
+		for (StudentCourse studentCourse : courses) {
+			if(studentCourse.getCourseId() == id){
+				return studentCourse.getCourse();
+			}
+		}
+		return null;
+	}
+
+	public StudentCourse getStudentCourseByCouseId(Long id) {
+		for (StudentCourse studentCourse : courses) {
+			if(studentCourse.getCourseId() == id){
+				return studentCourse;
+			}
+		}
+		return null;
+	}
+
+	public void countReqHour() {
+		reqHour = 0;
+		for (StudentCourse studentCourse : courses) {
+			  if(studentCourse.getCourse().getReqAlt()  == 1){
+				  reqHour += studentCourse.getHour();
+			  }
+		}
+		
+	}
+
+	public void countAltHour() {
+		altHour = 0;
+		for (StudentCourse studentCourse : courses) {
+			  if(studentCourse.getCourse().getReqAlt() == 2){
+				  altHour += studentCourse.getHour();
+			  }
+		}
+	}
+
 }

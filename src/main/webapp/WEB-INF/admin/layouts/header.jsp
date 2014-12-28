@@ -24,10 +24,10 @@
     			<shiro:user>
 					<shiro:hasRole name="super">
 					<li class="course_tab"><a href="${ctx}/admin/course"><i class="fa fa-th"></i> <span>课程管理</span></a></li>
-					<li class="course_tab"><a href="${ctx}/admin/examinfo"><i class="fa fa-th"></i> <span>考试管理</span></a></li>
+					<li class="exams_tab"><a href="${ctx}/admin/examinfo"><i class="fa fa-th"></i> <span>考试管理</span></a></li>
 					<li class="admin_tab"><a href="${ctx}/admin/manager"><i class="fa fa-th-list"></i> <span>管理员管理</span></a></li>
 					<li class="inform_tab"><a href="${ctx}/admin/informAdmin"><i class="fa fa-th-list"></i> <span>通知管理</span></a></li>
-				</shiro:hasRole>	
+				    </shiro:hasRole>	
 				</shiro:user>
 			</ul>
 			

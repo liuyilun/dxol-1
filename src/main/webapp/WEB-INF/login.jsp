@@ -27,10 +27,10 @@
                 	<input type="text" hidden="true" name="method" id="method" value="student"/>
     				<p>请输入学生用户名和密码：</p>
                     <div class="input-group input-sm">
-                        <span class="input-group-addon"><i class="fa fa-user"></i></span><input class="form-control" type="text" id="username" name="username" placeholder="Username" />
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span><input class="form-control" type="text" id="username" name="username" placeholder="用户名" />
                     </div>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lock"></i></span><input class="form-control" type="password" id="password" name="password" placeholder="Password" />
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span><input class="form-control" type="password" id="password" name="password" placeholder="密码" />
                     </div>
                     <div class="form-actions clearfix">
                         <div class="pull-left">
@@ -47,10 +47,10 @@
                 	<input type="text" hidden="true" name="method" id="method" value="admin"/>
                     <p>请输入管理员用户名和密码：</p>
 	                    <div class="input-group input-sm">
-	                        <span class="input-group-addon"><i class="fa fa-user"></i></span><input class="form-control" type="text" id="username" name="username" placeholder="Username" />
+	                        <span class="input-group-addon"><i class="fa fa-user"></i></span><input class="form-control" type="text" id="username" name="username" placeholder="用户名" />
 	                    </div>
 	                    <div class="input-group">
-	                        <span class="input-group-addon"><i class="fa fa-lock"></i></span><input class="form-control" type="password" id="password" name="password" placeholder="Password" />
+	                        <span class="input-group-addon"><i class="fa fa-lock"></i></span><input class="form-control" type="password" id="password" name="password" placeholder="密码" />
 	                    </div>
  						<div class="form-actions clearfix">
 		                    <div class="pull-left">
@@ -65,6 +65,14 @@
         
         <script src="${ctx}/static/unicorn/js/jquery.min.js"></script>  
         <script src="${ctx}/static/unicorn/js/jquery-ui.custom.min.js"></script>
+        <script src="${ctx}/static/unicorn/js/jquery.validate.js"></script>
         <script src="${ctx}/static/unicorn/js/unicorn.login.js"></script> 
+        <script type="text/javascript">
+        $(document).ready(function(){
+        	if("${error}"=="error"){
+        		   $("#loginbox").effect('shake');
+        	}
+        });
+        </script>
     </body>
 </html>

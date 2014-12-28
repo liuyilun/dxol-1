@@ -48,6 +48,7 @@ public class StudentUpdateController {
 	private CourseService courseService;
 	@Autowired
 	private StudentCourseService studentCourseService;
+
 	@Autowired
 	public void setStudentService(StudentService studentService) {
 		this.studentService = studentService;
@@ -69,7 +70,7 @@ public class StudentUpdateController {
 	@RequestMapping(value = "save/{id}")
 	public String update(@Valid @ModelAttribute("student") Student student, RedirectAttributes redirectAttributes,
 			HttpServletRequest request, @PathVariable("id") Long id, @RequestParam(value = "school_id") Long schoolId,
-			@RequestParam(value = "identity_id") Long identityId,String username1) {
+			@RequestParam(value = "identity_id") Long identityId, String username1) {
 		student.setUsername(username1);
 		School school = new School();
 		school.setId(schoolId);
@@ -77,13 +78,14 @@ public class StudentUpdateController {
 		Identity identity = new Identity();
 		identity.setId(identityId);
 		student.setIdentity(identity);
-		
+
 		Student student2 = studentService.findStudentbyName(id);
-		System.out.println(identityId+"++++"+student2.getIdentity().getId());
+		System.out.println(identityId + "++++" + student2.getIdentity().getId());
 		if (student2.getIdentity().getId() != identityId) {
-			Summary summary=student2.getSummary();
-			if ((summary != null) && (summary.getId() != null)) 
-			summaryService.deletesummary(summary.getId());
+			Summary summary = student2.getSummary();
+			if ((summary != null) && (summary.getId() != null)) {
+				summaryService.deletesummary(summary.getId());
+			}
 			student.setGrade(0);
 			student.setReqHour(0);
 			student.setAltHour(0);
@@ -92,23 +94,27 @@ public class StudentUpdateController {
 			String ctxPath = request.getSession().getServletContext().getRealPath("/")
 					+ StudentUpdateController.UPLOADDIR; // 获得服务器上存放下载资源的地址
 			System.out.println(ctxPath);
-			
-			  String storeName = student2.getSummary().getPath();
-			  String downLoadPath = ctxPath + storeName;
-			  File file=new File(downLoadPath);
-			  if(file.exists() && file.isFile())
-			  file.delete();
-			 
-			List<Course> oldcourses = courseService.getCourseByIdentityId(student2.getIdentity().getId());
-			for (Course course:oldcourses) {
-				studentCourseService.deleteStudentCourseByCourseId(course.getId());
+			if ((summary != null) && (summary.getId() != null)) {
+				String storeName = student2.getSummary().getPath();
+				String downLoadPath = ctxPath + storeName;
+				File file = new File(downLoadPath);
+				if (file.exists() && file.isFile()) {
+					file.delete();
+				}
 			}
+			/*
+			 * List<Course> oldcourses = courseService.getCourseByIdentityId(student2.getIdentity().getId());
+			 * for (Course course : oldcourses) {
+			 * studentCourseService.deleteStudentCourseByCourseId(course.getId());
+			 * }
+			 */
+			studentCourseService.deleteStudentCourseByStudentId(student2.getId());
 			List<Course> courses = courseService.getCourseByIdentityId(student.getIdentity().getId());
-			
+
 			for (Course course : courses) {
 				student.addCourse(course);
 			}
-			
+
 			studentCourseService.saveStudentCourse(student.getCourses());
 		}
 		student.setRegisterDate(student2.getRegisterDate());

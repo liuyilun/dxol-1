@@ -14,6 +14,8 @@ public interface ExaminfoDao extends PagingAndSortingRepository<ExamInfo, Long>,
 
 	@Query("select examinfo from ExamInfo examinfo order by rand() ")
 	List<ExamInfo> findbyIdentityId();
+	@Query("select examinfo from ExamInfo examinfo where examinfo.course.id=?1")
+	List<ExamInfo> findbyCourseId(Long id);
 	
 
 }

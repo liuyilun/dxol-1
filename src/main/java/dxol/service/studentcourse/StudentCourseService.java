@@ -9,19 +9,29 @@ import dxol.repository.StudentCourseDao;
 
 @Component
 @Transactional
-
 public class StudentCourseService {
+
 	@Autowired
-	private StudentCourseDao studentCourseDao ;
-	public void saveStudentCourse(StudentCourse list ){
-		studentCourseDao.save(list);
+	private StudentCourseDao studentCourseDao;
+
+	public void saveStudentCourse(StudentCourse studentCourse) {
+		studentCourseDao.save(studentCourse);
 	}
-	public void saveStudentCourse(Iterable<StudentCourse> studentCourses ){
+	
+
+	public void saveStudentCourse(Iterable<StudentCourse> studentCourses) {
 		studentCourseDao.save(studentCourses);
 	}
 
 	public void deleteStudentCourseByCourseId(Long id) {
 		studentCourseDao.deleteByCourseId(id);
 	}
-	
+
+	public void deleteStudentCourseByStudentId(Long id) {
+		studentCourseDao.deleteByStudentId(id);
+	}
+
+	public StudentCourse findByCourseStudentID(Long cid, Long sid) {
+		return studentCourseDao.findByid(cid, sid);
+	}
 }

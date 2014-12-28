@@ -28,6 +28,8 @@ public class StudentCourse implements Serializable {
 	private int time = 0;
 	@Column(name="hour")
 	private int hour = 0;
+	@Column(name="is_finish")
+	private int isFinish = 1;
 	@ManyToOne
 	@JoinColumn(name = "student_id", referencedColumnName="id", updatable = false, insertable = false)
 	private Student student;
@@ -53,7 +55,13 @@ public class StudentCourse implements Serializable {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
+	public int getIsFinish() {
+		return isFinish;
+	}
 
+	public void setIsFinish(int isFinish) {
+		this.isFinish = isFinish;
+	}
 	public int getTime() {
 		return time;
 	}

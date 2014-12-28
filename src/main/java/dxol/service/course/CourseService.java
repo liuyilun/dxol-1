@@ -37,7 +37,6 @@ public class CourseService {
 	public Object[][]  getCourse(Long id) {
 		return courseDao.findById(id);
 	}
-
 	public void saveCourse(Course course) {
 		courseDao.save(course);
 		System.out.println(course.getIdentity().getId()+"------");
@@ -57,6 +56,9 @@ public class CourseService {
 
 	public List<Course> getAllCourse() {
 		return (List<Course>) courseDao.findAll();
+	}
+	public Course getbyCourseId(Long id) {
+		return courseDao.findbyCourseId(id);
 	}
 	public List<Course> getCourseByIdentityId(Long id) {
 		return (List<Course>) courseDao.findbyIdentityId(id);
@@ -94,4 +96,6 @@ public class CourseService {
 	public void setCourseDao(CourseDao courseDao) {
 		this.courseDao = courseDao;
 	}
+
+	
 }

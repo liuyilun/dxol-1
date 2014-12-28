@@ -164,37 +164,37 @@ public class StudentController {
 
 	// 删除当前用户
 
-	@RequestMapping(value = "delete/{id}")
-	public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes,HttpServletRequest request) {
-		Student student = studentService.findStudentbyName(id);
-		// 现根据学生id找到对应的summary，再根据summaryid将该summary删除 Summary
+		@RequestMapping(value = "delete/{id}")
+		public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+			Student student = studentService.findStudentbyName(id);
+			// 现根据学生id找到对应的summary，再根据summaryid将该summary删除 Summary
 
-		Summary summary = student.getSummary(); // summary.setId(id);
-		if ((summary != null) && (summary.getId() != null)) {
-			summaryService.deletesummary(summary.getId());
-			String ctxPath = request.getSession().getServletContext().getRealPath("/")
-					+ StudentController.UPLOADDIR; // 获得服务器上存放下载资源的地址
-			System.out.println(ctxPath);
-			
-			  String storeName = student.getSummary().getPath();
-			  String downLoadPath = ctxPath + storeName;
-			  File file=new File(downLoadPath);
-			  if(file.exists() && file.isFile())
-			  file.delete();
-			 
-			List<Course> oldcourses = courseService.getCourseByIdentityId(student.getIdentity().getId());
-			for (Course course:oldcourses) {
-				studentCourseService.deleteStudentCourseByCourseId(course.getId());
+			Summary summary = student.getSummary(); // summary.setId(id);
+			if ((summary != null) && (summary.getId() != null)) {
+				summaryService.deletesummary(summary.getId());
+				String ctxPath = request.getSession().getServletContext().getRealPath("/") + StudentController.UPLOADDIR; // 获得服务器上存放下载资源的地址
+				System.out.println(ctxPath);
+
+				String storeName = student.getSummary().getPath();
+				String downLoadPath = ctxPath + storeName;
+				File file = new File(downLoadPath);
+				if (file.exists() && file.isFile()) {
+					file.delete();
+				}
 			}
-		}
-		studentService.deleteStudent(id);
-		redirectAttributes.addFlashAttribute("message", "删除任务成功");
-		return "redirect:/admin/student/";
-	}
+			// List<Course> oldcourses = courseService.getCourseByIdentityId(student.getIdentity().getId());
+			// for (Course course : oldcourses) {
+			studentCourseService.deleteStudentCourseByStudentId(student.getId());
+			// }
 
-	@RequestMapping(value = "detail/{id}")
-	public void detail(@PathVariable("id") Long id, Model model) {
-		Student student = studentService.findStudentbyName(id);
-		model.addAttribute("student", student);
+			studentService.deleteStudent(id);
+			redirectAttributes.addFlashAttribute("message", "删除成功");
+			return "redirect:/admin/student/";
+		}
+
+		@RequestMapping(value = "detail/{id}")
+		public void detail(@PathVariable("id") Long id, Model model) {
+			Student student = studentService.findStudentbyName(id);
+			model.addAttribute("student", student);
+		}
 	}
-}
