@@ -1,11 +1,12 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 	<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.html"><strong>党校在线学习平台</strong></a>
+                <a class="navbar-brand" href="${ctx }/"><img src="${ctx}/static/unicorn/img/logo.png" alt="" /></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -21,7 +22,7 @@
                         <li>
                         	<c:set var="per" value="${studentCourse.time/(studentCourse.course.hour*60) }"/>
                         	
-                            <a href="#">
+                            <a href="${ctx}/ol/studycourse/view/${studentCourse.course.id}">
                                 <div>
                                     <p>
                                         <strong>${studentCourse.course.courseName }</strong>
@@ -69,13 +70,13 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="${ctx }/"><i class="fa fa-table fa-fw"></i> 首页</a>
+                            <a href="${ctx }/"><i class="fa fa-home fa-fw"></i> 首页</a>
                         </li>
                         <li>
-                            <a href="${ctx}/ol/studycourse"><i class="fa fa-dashboard fa-fw"></i> 在线学习</a>
+                            <a href="${ctx}/ol/studycourse"><i class="fa fa-graduation-cap fa-fw"></i> 在线学习</a>
                         </li>
                         <li>
-                            <a href="${ctx}/ol/test"><i class="fa fa-table fa-fw"></i> 在线考试</a>
+                            <a href="${ctx}/ol/test"><i class="fa fa-pencil-square-o fa-fw"></i> 在线考试</a>
                         </li>
                       
                       

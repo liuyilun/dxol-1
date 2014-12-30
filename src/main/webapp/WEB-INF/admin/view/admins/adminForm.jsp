@@ -147,8 +147,8 @@ color:red;
 							<div class="form-group">
 								<label class="col-sm-3 col-md-3 col-lg-2 control-label">所属学院</label>
 								<div class="col-sm-9 col-md-9 col-lg-10">
-									<span style="font-size: 18px;"> <select id="school_id"
-										name="school_id">
+									<span style="font-size: 18px;"> 
+									<select id="school_id" name="school_id">
 										<option value="0">======请选择学院======</option>
 											<c:forEach items="${schools}" var="school">
 												<option value="${school.id }"

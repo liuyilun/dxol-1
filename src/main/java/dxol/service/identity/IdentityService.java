@@ -9,17 +9,21 @@ import org.springframework.transaction.annotation.Transactional;
 import dxol.entity.Identity;
 import dxol.repository.IdentityDao;
 
-
 @Component
 @Transactional
-
 public class IdentityService {
 	private IdentityDao identityDao;
+
 	@Autowired
-	public void setIdentityDao(IdentityDao identityDao){
-		this.identityDao=identityDao;
+	public void setIdentityDao(IdentityDao identityDao) {
+		this.identityDao = identityDao;
 	}
-	public List<Identity> findAllIdentity(){
-		return (List<Identity>)identityDao.findAll();
+
+	public List<Identity> findAllIdentity() {
+		return (List<Identity>) identityDao.findAll();
 	}
- }
+
+	public Identity findByIdentityName(String name) {
+		return identityDao.findByIdentityName(name);
+	}
+}

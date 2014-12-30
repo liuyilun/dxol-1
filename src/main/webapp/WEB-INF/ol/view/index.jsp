@@ -86,7 +86,7 @@
                 </div>
                 <!-- /.col-lg-8 -->
                 <div class="col-lg-4">
-                    <div class="panel panel-info ">
+                    <div class="panel panel-info">
                         <div class="panel-heading">
                             <i class="fa fa-user fa-fw"></i> 个人信息
                         </div>

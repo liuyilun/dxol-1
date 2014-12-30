@@ -31,6 +31,11 @@ public class Student extends User {
 	private Identity identity;
 
 	private List<StudentCourse> courses;
+	
+	public Student() {
+		super();
+		setRole("student");
+	}
 
 	public String getDepart() {
 		return depart;
@@ -152,7 +157,6 @@ public class Student extends User {
 		this.courses.add(newStudentCourse);
 		course.getStudents().add(newStudentCourse);
 	}
-
 
 	public Course getCourseById(Long id) {
 		for (StudentCourse studentCourse : courses) {

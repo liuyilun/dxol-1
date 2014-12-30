@@ -38,30 +38,13 @@ public class AccountService {
 	public final String STUDENT_METHOD = "student";
 	public final String ADMIN_METHOD = "admin";
 
-	private static Logger logger = LoggerFactory.getLogger(AccountService.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(AccountService.class);
 
 	private Clock clock = Clock.DEFAULT;
 	private AdminDao adminDao;
 	private StudentDao studentDao;
 
-	// public List<User> getAllUser() {
-	// return (List<User>) userDao.findAll();
-	// }
-	//
-
-	//
-	// public User findUserByLoginName(String loginName) {
-	// return userDao.findByLoginName(loginName);
-	// }
-	//
-	// public void registerUser(User user) {
-	// entryptPassword(user);
-	// user.setRole("user");
-	// user.setRegisterDate(clock.getCurrentDate());
-	//
-	// userDao.save(user);
-	// }
-	//
 	public void updateUser(User user, String method) {
 		if (StringUtils.isNotBlank(user.getPlainPassword())) {
 			entryptPassword(user);
@@ -73,17 +56,6 @@ public class AccountService {
 		}
 	}
 
-	//
-	// public void deleteUser(Long id) {
-	// if (isSupervisor(id)) {
-	// logger.warn("操作员{}尝试删除超级管理员用户", getCurrentUserName());
-	// throw new ServiceException("不能删除超级管理员用户");
-	// }
-	// userDao.delete(id);
-	// taskDao.deleteByUserId(id);
-	//
-	// }
-
 	/**
 	 * 设定安全的密码，生成随机的salt并经过1024次 sha-1 hash
 	 */
@@ -91,7 +63,8 @@ public class AccountService {
 		byte[] salt = Digests.generateSalt(SALT_SIZE);
 		user.setSalt(Encodes.encodeHex(salt));
 
-		byte[] hashPassword = Digests.sha1(user.getPlainPassword().getBytes(), salt, HASH_INTERATIONS);
+		byte[] hashPassword = Digests.sha1(user.getPlainPassword().getBytes(),
+				salt, HASH_INTERATIONS);
 		user.setPassword(Encodes.encodeHex(hashPassword));
 	}
 

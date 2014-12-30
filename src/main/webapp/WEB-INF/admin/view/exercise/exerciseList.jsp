@@ -19,23 +19,16 @@
 		 var message ="确认删除 <strong> "+name+"</strong> 吗？";
 		 bootbox.confirm(message,function(result){
 			 if(result){
-				 location.href="${ctx}/admin/course/delete/" + id;
+				 location.href="${ctx}/admin/examinfo/remove/" + id;
 			 }
 		 });
 		 
      }
-	function viewCourse(id){
-		  $.ajax( {  
-		        type : "get",  
-		        url : "${ctx}/admin/course/view/"+id,  
-		        dataType:"json",  
-		        success : function(res) {  
-		        	bootbox.dialog({
-		    		  title: res.courseName,
-		    		  message: res.content
-		    		});
-		        }  
-		    });  
+	function viewInform(title,content){
+		bootbox.dialog({
+		  title: title,
+		  message: content
+		});
 	}
 
 
@@ -51,11 +44,11 @@
 
 		<div id="content">
 			<div id="content-header">
-				<h1>课程管理</h1>
+				<h1>练习题管理</h1>
 			</div>
 			<div id="breadcrumb">
 				<a href="#" title="Go to Home" class="tip-bottom"><i
-					class="fa fa-home"></i> 首页</a> <a href="#" class="current">课程管理</a>
+					class="fa fa-home"></i> 首页</a> <a href="#" class="current">练习题管理</a>
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
@@ -64,52 +57,40 @@
 						<div class="widget-title">
 					
 							<span class="icon" >
-								<a class="tip-top" href="${ctx}/admin/course/create" data-original-title = "添加课程" align="center"> 
+								<a class="tip-top" href="${ctx}/admin/examinfo/add/${courseid}" data-original-title = "添加练习题" align="center"> 
 								<i class="fa fa-plus-square"></i>
 								</a>
 							</span>
 						
-							<h5>课程列表</h5>
+							<h5>练习题列表</h5>
 						</div>
 						<div class="widget-content nopadding">
 							<table
 								class="table table-bordered table-striped table-hover data-table">
 								<thead>
 									<tr>
-										<th>课程题目</th>
-										<th>课程学时</th>
-										<th>所属身份</th>
-										<th>课程性质</th>
+										<th>练习题题目</th>
+										<th>选项A</th>
+										<th>选项B</th>
+										<th>选项C</th>
+										<th>选项D</th>
 										<th>操作</th>
-										
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${courses }" var="course">
+									<c:forEach items="${examinfos}" var="examinfo">
 										<tr class="gradeX">
-											<td >${course.courseName }</td>
-											<td align="center"  style="width: 10%;">${course.hour }</td>
-											<td align="center"  style="width: 15%;">${course.identity.identityName }</td>
-											<td align="center" style="width: 10%;">
-												<c:if test="${course.reqAlt==1}">
-													必修
-												</c:if>
-												<c:if test="${course.reqAlt==2}">
-													选修
-												</c:if>
-											</td>
+											<td>${examinfo.questionInfo }</td>
+											<td  align="center" style="width: 10%;">${examinfo.choiceA }</td>
+											<td  align="center" style="width: 10%;">${examinfo.choiceB }</td>
+											<td  align="center" style="width: 10%;">${examinfo.choiceC }</td>
+											<td  align="center" style="width: 10%;">${examinfo.choiceD }</td>
 											<td class="taskOptions" style="width: 120px">
-												<a  class= "tip-top" data-original-title="查看详情" >
-													<i class="fa fa-eye view"  onclick="viewCourse(${course.id});"></i>
-												</a>&nbsp;&nbsp;
-												<a href="${ctx}/admin/course/update/${course.id}" class="tip-top" data-original-title="修改">
+												<a href="${ctx}/admin/examinfo/modify/${examinfo.id}" class="tip-top" data-original-title="修改">
 													<i class="fa fa-pencil"></i>
 												</a> &nbsp;&nbsp;
-												<a class="tip-top" data-original-title="删除" onclick="deleteConfirm(${course.id},'${course.courseName}');">
+												<a class="tip-top" data-original-title="删除" onclick="deleteConfirm(${examinfo.id},'${examinfo.questionInfo}');">
 													<i class="fa fa-times"></i>
-												</a>&nbsp;&nbsp;
-												<a href="${ctx}/admin/examinfo/show/${course.id}" class="tip-top" data-original-title="习题集">
-													<i class="fa fa-file-text-o"></i>
 												</a>
 											</td>
 										</tr>

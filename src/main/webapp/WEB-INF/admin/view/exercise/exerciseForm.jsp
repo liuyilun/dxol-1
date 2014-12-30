@@ -3,7 +3,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 	<head>
-		<title>添加试题</title>
+		<title>添加练习题</title>
 		
 	    <link rel="stylesheet" type="text/css" href="${ctx}/static/bootstrap3-wysihtml5-master/src/bootstrap-wysihtml5.css" />
 	    <script src="${ctx}/static/bootstrap3-wysihtml5-master/lib/js/wysihtml5-0.3.0.js"></script>
@@ -12,7 +12,7 @@
 		
 		<script type="text/javascript">
 		$(document).ready(function(){
-		$(".exams_tab").addClass("active");
+		$(".course_tab").addClass("active");
 			$('#infoContent').wysihtml5({
 				"link": false, //Button to insert a link. Default true
 				"image": false, //Button to insert an image. Default true,
@@ -35,10 +35,8 @@
 		{
 		with (thisform)
 		  {
-		  if (validate_required(questionInfo,"试题题目不能为空！")==false)
+		  if (validate_required(questionInfo,"练习题题目不能为空！")==false)
 		    {questionInfo.focus();return false}
-		   if (validate_required(identity_id,"所属身份不能为空！")==false)
-		    {identity_id.focus();return false}
 		  if (validate_required(choiceA,"选项A不能为空！")==false)
 		    {choiceA.focus();return false}
 		  if (validate_required(choiceB,"选项B不能为空！")==false)
@@ -61,7 +59,7 @@
 			<div id="content">
 				<div id="breadcrumb">
 					<a href="#" title="Go to Home" class="tip-bottom"><i class="fa fa-home"></i> 首页</a>
-					<a href="#" class="current">试题管理</a>
+					<a href="#" class="current">练习题</a>
 				</div>
 
 				<div class="container-fluid">
@@ -72,37 +70,18 @@
 								<span class="icon">
 									<i class="fa fa-pencil"></i>									
 								</span>
-								<h5>试题管理</h5>
+								<h5>练习题管理</h5>
 							</div>
 							<div class="widget-content nopadding">
 								<form name="exam" action="${ctx}/admin/examinfo/${action}" method="post" class="form-horizontal" onsubmit="return validate_form(this)">
 									<input type="hidden"name="id" value="${examinfo.id }"/>
+									<input type="hidden"name="courseid" value="${course.id }"/>
+									<input type="hidden"name="identity_id" value="${course.identity.id }"/>
 									<div class="form-group">
-										<label class="col-sm-3 col-md-3 col-lg-2 control-label">试题题目：</label>
+										<label class="col-sm-3 col-md-3 col-lg-2 control-label">练习题题目：</label>
 										<div class="col-sm-9 col-md-9 col-lg-10" style="margin-top: 10px;">
 											<input type="text" class="form-control input-sm" name="questionInfo" id="questionInfo" value="${examinfo.questionInfo }"/>
 										</div>
-									    <label class="col-sm-3 col-md-3 col-lg-2 control-label">所属身份：</label>
-										<div class="col-sm-9 col-md-9 col-lg-10" style="margin-top: 10px;">
-										<select name="identity_id" id="identity_id" >
-                                        <option value="0">=选择身份=</option>
-                                        <option value="1" 
-                                        	<c:if test="${ examinfo.identity.id==1}">selected="selected"</c:if>
-                                        >积极分子</option>
-                                        <option value="2"
-                                		 <c:if test="${ examinfo.identity.id==2}">selected="selected"	</c:if>
-                                        >发展对象</option>
-                                        <option value="3"
-                                        <c:if test="${ examinfo.identity.id==3}">selected="selected"	</c:if>
-                                        >预备党员</option>
-                                        <option value="4"
-                                        <c:if test="${ examinfo.identity.id==4}">selected="selected"	</c:if>
-                                        >正式党员</option>
-                                        <option value="5"
-                                       <c:if test="${ examinfo.identity.id==5}">selected="selected"	</c:if>
-                                        >支部书记</option>
-                                         </select>
-                                         </div>
 										<label class="col-sm-3 col-md-3 col-lg-2 control-label">选项A：</label>
 										<div class="col-sm-9 col-md-9 col-lg-10" style="margin-top: 10px;">
 											<input type="text" class="form-control input-sm" name="choiceA" id="choiceA" value="${examinfo.choiceA }"/>
@@ -135,7 +114,7 @@
 
 									
 									<div class="form-actions">
-										<button type="submit" class="btn btn-primary btn-sm" >保存</button>&nbsp;&nbsp; &nbsp; <a class="text-danger" href="${ctx}/admin/examinfo">取消</a>
+										<button type="submit" class="btn btn-primary btn-sm" >保存</button>&nbsp;&nbsp; &nbsp; <a class="text-danger" href="${ctx}/admin/course">取消</a>
 									</div>
 								</form>
 							</div>

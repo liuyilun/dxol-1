@@ -20,78 +20,66 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-9">
-					<div class="panel panel-success">
-						<div class="panel-heading">
-							<h4>
-								<strong>必修课程:</strong>
-							</h4>
+			    <div  class="panel panel-default">
+			       <div class="panel-heading">
+			       <h4><strong>必修课程:</strong></h4>
+			       </div>
+				<div class="panel-body">			
+				<c:forEach items="${currentStudent.courses}" var="studentCourse">
+				  <c:if test="${studentCourse.course.reqAlt==1}">
+					<ul>
+						<div  class="col-lg-9">
+							<a href="studycourse/view/${studentCourse.course.id}">
+								<div>
+									<p>
+										<strong>${studentCourse.course.courseName}</strong> <span
+											class="pull-right text-muted"><strong>${studentCourse.time }/${studentCourse.course.hour*45}</strong> 分钟</span>
+									</p>
+									<div class="progress progress-striped active">
+										<div class="progress-bar progress-bar-info" role="progressbar"
+											aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+											style="width:${100*studentCourse.time/(studentCourse.course.hour*45)}%">
+										</div>
+									</div>
+								</div>
+							</a>
 						</div>
-						<div class="panel-body">
-							<c:forEach items="${currentStudent.courses}" var="studentCourse">
-								<c:if test="${studentCourse.course.reqAlt==1}">
-									<ul>
-
-										<a href="studycourse/view/${studentCourse.course.id}">
-											<div>
-												<p>
-													<strong>${studentCourse.course.courseName}</strong> <span
-														class="pull-right text-muted"><strong>${studentCourse.time }/${studentCourse.course.hour*45}</strong>
-														分钟</span>
-												</p>
-												<div class="progress progress-striped active">
-													<div class="progress-bar progress-bar-success"
-														role="progressbar" aria-valuenow="40" aria-valuemin="0"
-														aria-valuemax="100"
-														style="width:${100*studentCourse.time/(studentCourse.course.hour*45)}%">
-													</div>
-												</div>
-											</div>
-										</a>
-									</ul>
-								</c:if>
-							</c:forEach>
+					</ul>
+			       </c:if>
+				</c:forEach>
+			</div>			
+		</div>
+		</div>
+		<div class="row">
+			   <div  class="panel panel-default">
+			       <div class="panel-heading">
+			       <h4><strong>选修课程:</strong></h4>
+			      </div>
+				<div class="panel-body">			
+				<c:forEach items="${currentStudent.courses}" var="studentCourse">
+				  <c:if test="${studentCourse.course.reqAlt==2}">
+					<ul>
+						<div  class="col-lg-9">
+							<a href="studycourse/view/${studentCourse.course.id}">
+								<div>
+									<p>
+										<strong>${studentCourse.course.courseName}</strong> <span
+											class="pull-right text-muted"><strong>${studentCourse.time }/${studentCourse.course.hour*45}</strong> 分钟</span>
+									</p>
+									<div class="progress progress-striped active">
+										<div class="progress-bar progress-bar-info" role="progressbar"
+											aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+											style="width:${100*studentCourse.time/(studentCourse.course.hour*45)}%">
+										</div>
+									</div>
+								</div>
+							</a>
 						</div>
-					</div>
-				</div>
+					 </ul>
+			       </c:if>
+				 </c:forEach>			
 			</div>
-			<div class="row">
-				<div class="col-lg-9">
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<h4>
-								<strong>选修课程:</strong>
-							</h4>
-						</div>
-						<div class="panel-body">
-							<c:forEach items="${currentStudent.courses}" var="studentCourse">
-								<c:if test="${studentCourse.course.reqAlt==2}">
-									<ul>
-
-										<a href="studycourse/view/${studentCourse.course.id}">
-											<div>
-												<p>
-													<strong>${studentCourse.course.courseName}</strong> <span
-														class="pull-right text-muted"><strong>${studentCourse.time }/${studentCourse.course.hour*45}</strong>
-														分钟</span>
-												</p>
-												<div class="progress progress-striped active">
-													<div class="progress-bar progress-bar-info"
-														role="progressbar" aria-valuenow="40" aria-valuemin="0"
-														aria-valuemax="100"
-														style="width:${100*studentCourse.time/(studentCourse.course.hour*45)}%">
-													</div>
-												</div>
-											</div>
-										</a>
-
-									</ul>
-								</c:if>
-							</c:forEach>
-						</div>
-					</div>
-				</div>
-			</div>
+		</div>
 		</div>
 	</div>
 </body>

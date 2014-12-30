@@ -3,7 +3,6 @@ package dxol.service.examinfo;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,9 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import dxol.entity.ExamInfo;
-import dxol.entity.Student;
 import dxol.repository.ExaminfoDao;
-import dxol.service.account.ShiroDbRealm.ShiroUser;
 import dxol.service.student.StudentService;
 
 // ExamInfo Bean的标识.
@@ -40,15 +37,31 @@ public class ExaminfoService  {
 	}
 
 	public List<ExamInfo> getAllExaminfo() {
-		return (List<ExamInfo>) examinfoDao.findAll();
+		return (List<ExamInfo>) examinfoDao.findAllExam();
 	}
-
+	public void deleteExaminfoByCourseId(Long id) {
+		examinfoDao.deleteBycourseId(id);
+		
+	}
+	public List<ExamInfo> getExaminfoBycourseId(Long id){
+		return examinfoDao.findbyCourseId(id);
+	}
 	public Page<ExamInfo> getExaminfo(Map<String, Object> searchParams, int pageNumber, int pageSize,
 			String sortType) {
 		PageRequest pageRequest = buildPageRequest(pageNumber, pageSize, sortType);
 		return examinfoDao.findAll(pageRequest);
 	}
 
+	/**
+	 * 创建动态查询条件组合.
+	 
+	private Specification<Task> buildSpecification(Long userId, Map<String, Object> searchParams) {
+		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
+		filters.put("user.id", new SearchFilter("user.id", Operator.EQ, userId));
+		Specification<Task> spec = DynamicSpecifications.bySearchFilter(filters.values(), Task.class);
+		return spec;
+	}
+	 */
 	/**
 	 * 创建分页请求.
 	 */
@@ -63,16 +76,6 @@ public class ExaminfoService  {
 		return new PageRequest(pageNumber - 1, pagzSize, sort);
 	}
 
-	/**
-	 * 创建动态查询条件组合.
-	 
-	private Specification<Task> buildSpecification(Long userId, Map<String, Object> searchParams) {
-		Map<String, SearchFilter> filters = SearchFilter.parse(searchParams);
-		filters.put("user.id", new SearchFilter("user.id", Operator.EQ, userId));
-		Specification<Task> spec = DynamicSpecifications.bySearchFilter(filters.values(), Task.class);
-		return spec;
-	}
-*/
 	@Autowired
 	public void setExaminfoDao(ExaminfoDao examinfoDao) {
 		this.examinfoDao = examinfoDao;
@@ -86,4 +89,6 @@ public class ExaminfoService  {
 	public List<ExamInfo> getCourseExaminfo(Long id) {
 		return (List<ExamInfo>) examinfoDao.findbyCourseId(id);
 	}
+
+
 }

@@ -7,6 +7,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		var message = "${message}";
+		$(".exams_tab").addClass("active");
 		if(message!= null&&message!=""){
 			bootbox.alert(message,function(){
 			});
@@ -43,11 +44,11 @@
 
 		<div id="content">
 			<div id="content-header">
-				<h1>试题管理</h1>
+				<h1>考题管理</h1>
 			</div>
 			<div id="breadcrumb">
 				<a href="#" title="Go to Home" class="tip-bottom"><i
-					class="fa fa-home"></i> Home</a> <a href="#" class="current">Tables</a>
+					class="fa fa-home"></i> 首页</a> <a href="#" class="current">试题管理</a>
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
@@ -56,7 +57,7 @@
 						<div class="widget-title">
 					
 							<span class="icon" >
-								<a class="tip-top" href="${ctx}/admin/examinfo/create" data-original-title = "添加试题" align="center"> 
+								<a class="tip-top" href="${ctx}/admin/examinfo/create" data-original-title = "添加试题"  align="center"> 
 								<i class="fa fa-plus-square"></i>
 								</a>
 							</span>

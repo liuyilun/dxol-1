@@ -26,7 +26,7 @@ public class Course extends IdEntityBase {
 	private List<StudentCourse> students;
 	private List<ExamInfo> examinfos=Lists.newArrayList();
 
-	@OneToMany(cascade={CascadeType.ALL}, fetch =FetchType.EAGER,   
+	@OneToMany(fetch =FetchType.EAGER,   
             targetEntity = ExamInfo.class,mappedBy="course")
 	public List<ExamInfo> getExaminfos() {
 		return examinfos;

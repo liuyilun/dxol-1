@@ -19,26 +19,24 @@ public class StudentCourse implements Serializable {
 	 */
 	private static final long serialVersionUID = -2873540752029162226L;
 	@Id
-	@Column(name="student_id")
+	@Column(name = "student_id")
 	private Long studentId;
 	@Id
-	@Column(name="course_id")
+	@Column(name = "course_id")
 	private Long courseId;
-	@Column(name="time")
+	@Column(name = "time")
 	private int time = 0;
-	@Column(name="hour")
+	@Column(name = "hour")
 	private int hour = 0;
-	@Column(name="is_finish")
+	@Column(name = "is_finish")
 	private int isFinish = 1;
 	@ManyToOne
-	@JoinColumn(name = "student_id", referencedColumnName="id", updatable = false, insertable = false)
+	@JoinColumn(name = "student_id", referencedColumnName = "id", updatable = false, insertable = false)
 	private Student student;
 
 	@ManyToOne
-	@JoinColumn(name = "course_id", referencedColumnName="id", updatable = false, insertable = false)
+	@JoinColumn(name = "course_id", referencedColumnName = "id", updatable = false, insertable = false)
 	private Course course;
-
-	
 
 	public Student getStudent() {
 		return student;
@@ -55,6 +53,7 @@ public class StudentCourse implements Serializable {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
+
 	public int getIsFinish() {
 		return isFinish;
 	}
@@ -62,6 +61,7 @@ public class StudentCourse implements Serializable {
 	public void setIsFinish(int isFinish) {
 		this.isFinish = isFinish;
 	}
+
 	public int getTime() {
 		return time;
 	}
@@ -93,7 +93,5 @@ public class StudentCourse implements Serializable {
 	public void setCourseId(Long courseId) {
 		this.courseId = courseId;
 	}
-
-	
 
 }

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import dxol.entity.Course;
 import dxol.entity.Student;
 import dxol.repository.CourseDao;
+import dxol.service.examinfo.ExaminfoService;
 import dxol.service.student.StudentService;
 import dxol.service.studentcourse.StudentCourseService;
 
@@ -32,14 +33,20 @@ public class CourseService {
 	private StudentService studentService;
 	@Autowired
 	private StudentCourseService studentCourseService;
+	@Autowired
+	private ExaminfoService examinfoService;
 	
 
-	public Object[][]  getCourse(Long id) {
+	public Object[][]  getCourseinfo(Long id) {
 		return courseDao.findById(id);
 	}
+	public Course getCourse(Long id){
+		return courseDao.findOne(id);
+	}
+
 	public void saveCourse(Course course) {
 		courseDao.save(course);
-		System.out.println(course.getIdentity().getId()+"------");
+		
 		List<Long> students = studentService.getStudentByIdentityId(course.getIdentity().getId());
 		for(Long studentid : students){
 			Student student = new Student();
@@ -52,6 +59,7 @@ public class CourseService {
 	public void deleteCourse(Long id) {
 		courseDao.delete(id);
 		studentCourseService.deleteStudentCourseByCourseId(id);
+		examinfoService.deleteExaminfoByCourseId(id);
 	}
 
 	public List<Course> getAllCourse() {

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.web.Servlets;
 
 import com.google.common.collect.Maps;
@@ -54,7 +53,7 @@ public class CourseController{
 	private CourseService courseService;
 	@Autowired
 	private IdentityDao identityDao;
-
+    //将课程全部显示到页面
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(@RequestParam(value = "page", defaultValue = "1") int pageNumber,
 			@RequestParam(value = "page.size", defaultValue = PAGE_SIZE) int pageSize,
@@ -70,14 +69,14 @@ public class CourseController{
 
 		return "admin/view/course/courseList";
 	}
-
+//请求创建课程页面
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public String createForm(Model model) {
 		model.addAttribute("course", new Course());
 		model.addAttribute("action", "create");
 		return "admin/view/course/courseForm";
 	}
-
+//提交创建课程请求
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public String create(@Valid Course newCourse, RedirectAttributes redirectAttributes,Long identity_id) {
 		Identity identity = new Identity();
@@ -87,14 +86,14 @@ public class CourseController{
 		redirectAttributes.addFlashAttribute("message", "创建课程成功");
 		return "redirect:/admin/course";
 	}
-
+	//请求修改课程页面
 	@RequestMapping(value = "update/{id}", method = RequestMethod.GET)
 	public String updateForm(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("course", courseService.getCourse(id));
 		model.addAttribute("action", "update");
 		return "admin/view/course/courseForm";
 	}
-
+	//提交修改课程请求
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String update(@Valid @ModelAttribute("course") Course course, RedirectAttributes redirectAttributes,
 			Long identity_id) {
@@ -104,19 +103,19 @@ public class CourseController{
 		redirectAttributes.addFlashAttribute("message", "更新课程成功");
 		return "redirect:/admin/course";
 	}
-
+	//提交删除课程请求
 	@RequestMapping(value = "delete/{id}")
 	public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 		courseService.deleteCourse(id);
 		redirectAttributes.addFlashAttribute("message", "删除课程成功");
 		return "redirect:/admin/course";
 	}
-	
+	//查看课程详情请求
 	@RequestMapping(value = "view/{id}" ,method = RequestMethod.GET)
     @ResponseBody
 	public Course view(@PathVariable("id") Long id){
 		
-		Object[][] cc = courseService.getCourse(id);
+		Object[][] cc = courseService.getCourseinfo(id);
 		Course c = new Course();
 		System.out.println(cc);
 		c.setId((Long) cc[0][0]);

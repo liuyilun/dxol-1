@@ -13,9 +13,19 @@
 			}
 		});
 	}
-/* 	function success(message) {
-		bootbox.prompt(message);
-	} */
+	function deleteMore(){
+		bootbox.confirm("确认删除？",function(result){
+			if(result){
+				var ids="";
+				$(":checked").each(function(i,s){
+					if($(s).attr("name")!=$("#title-checkbox").attr("name")){
+						ids+=$(s).val()+",";
+					}
+				});
+				location.href = "${ctx}/admin/student/deleteMore/" + ids;
+			}
+		});
+	}
 	function detail(username,name,sex,role,registerDate,
 			schoolname,depart,altHour,reqHour,grade,examTime,
 			summaryfileName,summaryUpTime,identityName){
@@ -135,39 +145,48 @@
 				<h1>学生信息管理</h1>
 			</div>
 			<div id="breadcrumb">
-				<a href="${ctx}/admin/success" title="Go to Home" class="tip-bottom"><i
-					class="fa fa-home"></i> Home</a> 
+				<a href="#"><i class="fa fa-home"></i> 首页</a>
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-				<div class = "rol">
-					<form class="searchForm" action="#" role="form",method="get">
-						<div class="col-xs-3 form-group input-group" style="margin-bottom: -18px;">
-	                         <input type="text" class="form-control"  placeholder="姓名/学号/专业..."  name="searchPara" value="${param.searchPara}">
-	                         <span class="input-group-btn">
-	                             <button class="btn btn-default" data-original-title="搜索" type="submit"><i class="fa fa-search"></i>
-	                             </button>
-	                         </span>
-	                     </div>
-					</form>
-				
+					<div class="rol">
+						<form class="searchForm" action="#" role="form" ,method="get">
+							<div class="col-xs-3 form-group input-group"
+								style="margin-bottom: -18px;">
+								<input type="text" class="form-control"
+									placeholder="姓名/学号/专业..." name="searchPara"
+									value="${param.searchPara}"> <span
+									class="input-group-btn">
+									<button class="btn btn-default" data-original-title="搜索"
+										type="submit">
+										<i class="fa fa-search"></i>
+									</button>
+								</span>
+							</div>
+						</form>
+
 					</div>
 					<div class="widget-box">
 						<div class="widget-title">
-							<span class="icon">
-							<a class="tip-top" href="${ctx}/admin/student/create"  data-original-title = "添加学生" align="center">
-								<i class="fa fa-plus"></i>
-							</a> 
+							<span class="icon"> <a class="tip-top"
+								href="${ctx}/admin/student/create" data-original-title="添加学生"
+								align="center"> <i class="fa fa-plus"></i>
+							</a>
 							</span>
 							<h5>学生列表</h5>
-								
-								<tags:sort />
+
+							<tags:sort />
 						</div>
 						<div class="widget-content nopadding">
 							<table
 								class="table table-bordered table-striped table-hover data-table">
 								<thead>
 									<tr>
+										<th>
+											<span class="icon with-checkbox"> 
+												<input type="checkbox" id="title-checkbox" name="title-checkbox" />
+											</span>
+											</th>
 										<th style="width: 10%">用户名</th>
 										<!-- <th>密码</th> -->
 										<th style="width: 7%">姓名</th>
@@ -185,6 +204,7 @@
 								<tbody>
 									<c:forEach items="${students.content}" var="student">
 										<tr class="gradeX">
+										<td align="center"><input type="checkbox" name="checkbox" value="${student.id}" /></td>
 											<td>${student.username}</td>
 											<td>${student.name}</td>
 											<td align="center"><c:choose>
@@ -229,10 +249,13 @@
 									</c:forEach>
 								</tbody>
 							</table>
-						
-							<div class="row" style="margin-top:-18px;  margin-bottom: -23px;">
-								<label style="padding-top: 23px;padding-left: 10px;"> 共${students.totalElements }条数据</label>
-									<tags:pagination page="${students}" paginationSize="5" />
+
+							<div class="row" style="margin-top: -18px; margin-bottom: -23px;">
+								<button style="margin-left: 3px;" class="btn btn-inverse btn-xs" onclick="deleteMore();">删除选中</button>
+								<a href="${ctx}/admin/student/createMore" style="margin-left: 10px;" class="btn btn-inverse btn-xs" >批量添加</a>
+								<label style="padding-top: 23px; padding-left: 10px;">
+									共${students.totalElements }条数据</label>
+								<tags:pagination page="${students}" paginationSize="5" />
 							</div>
 						</div>
 					</div>
@@ -244,12 +267,10 @@
 	
 		$(document).ready(function(){
 			$(".student_tab").addClass("active");
-			var message="${message}" /* getUrlParam("message") */;
+			var message="${message}";
 			if(message!= null&&message!=""){
 				bootbox.alert(message);
 			}
-			
-			
 		});
 	</script>
 </body>

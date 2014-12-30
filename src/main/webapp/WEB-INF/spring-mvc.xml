@@ -43,6 +43,7 @@
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
 		<property name="exceptionMappings">  
 			<props>  
+				<prop key="org.springframework.dao.DataIntegrityViolationException">error/db</prop>
 				<prop key="java.lang.Throwable">error/500</prop>
             </props>  
 		</property>  

@@ -5,6 +5,9 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import dxol.entity.School;
 
-public interface SchoolDao extends PagingAndSortingRepository<School, Long>, JpaSpecificationExecutor<School> {
+public interface SchoolDao extends PagingAndSortingRepository<School, Long>,
+		JpaSpecificationExecutor<School> {
+
+	School findByName(String name);
 
 	}

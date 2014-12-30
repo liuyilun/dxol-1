@@ -41,7 +41,7 @@
 							<div id="someTimer"style="width: 330px; margin: 0 auto;" data-date="<fmt:formatDate value="${currenttime}" pattern="yyyy-MM-dd HH:mm:ss"/>">
 						</div>
 						<div style="text-align: center;">
-							<button id="button" type="button" onclick="finish()">结束本次学习</button>
+							<button id="button" type="button" class="btn btn-success disabled" onclick="finish()">结束本次学习</button>
 						</div>
 						
 					</div>	
@@ -139,12 +139,24 @@
 				}*/);
 				
 				$("div[id=none]").css({"display":"inline"});
-				/* $("#button").attr('disabled',true); */
+				$("#button").attr('disabled',true); 
+				$("#someTimer").TimeCircles().stop();
 			}
-			else if(res=="allfinish")
+			else if(res=="allfinish"){
 				bootbox.alert("本课程学习已完成，课后习题也已完成，点击OK学习其他课程!",function(){
 						window.location.href = "${ctx}/ol/studycourse"; 
 				});
+				$("#button").attr('disabled',true); 
+				$("#someTimer").TimeCircles().stop();
+			}
+			else if(res=="hasfinish"){
+				bootbox.alert("本课程学习已完成，该门课程课后没有习题，点击OK学习其他课程!",function(){
+					window.location.href = "${ctx}/ol/studycourse"; 
+			});
+				$("#button").attr('disabled',true); 
+				$("#someTimer").TimeCircles().stop();
+			}
+				
 		});
 	    //每隔10分钟，读取一次.
 	    setTimeout('updateMsg()', 1*60*1000);
@@ -159,17 +171,19 @@
 			}
 		}); */
 		var j=0;
+		var QUESTION_NUMBER;
 		 $.ajax({
              url:"${ctx}/ol/studycourse/check",
              data:$("#inputForm").serialize(),
              type:"post",
              dataType:"json",
              success:function(res){//ajax返回的数据
+            	 QUESTION_NUMBER=(res.length)/2;
             	 if(res){
-            		 for(j=0;j<5;j++){
+            		 for(j=0;j<QUESTION_NUMBER;j++){
             			 if(res[j]=="错误"){
             				$("div[id=answer_"+j+"]").css({"color":"red"});
-     						$("div[id=answer_"+j+"]").append(res[j]+"<div></div>"+"正确答案为："+res[j+5]);	
+     						$("div[id=answer_"+j+"]").append(res[j]+"<div></div>"+"正确答案为："+res[j+QUESTION_NUMBER]);	
             			 }
             			 else{
             				 $("div[id=answer_"+j+"]").css({"color":"green"});

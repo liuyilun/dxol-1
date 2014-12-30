@@ -8,6 +8,7 @@
 	
 	$(document).ready(function(){
 		var message = "${message}";
+		$(".inform_tab").addClass("active");
 		if(message!= null&&message!=""){
 			bootbox.alert(message,function(){
 			});
